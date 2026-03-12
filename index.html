@@ -330,6 +330,93 @@
             .player-stats h1 { text-align: left; }
         }
 
+        /* --- CAROUSEL STYLES --- */
+    .carousel-container {
+        border: 1px solid var(--text-muted);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 2px;
+    }
+
+    .carousel-screen {
+        border: 1px solid var(--border-color);
+        background: #000;
+        position: relative;
+        width: 100%;
+    }
+
+    .carousel-slide {
+        display: none;
+        flex-direction: column;
+    }
+
+    .carousel-slide.active {
+        display: flex;
+        animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* 16:9 Aspect Ratio for Media */
+    .media-frame {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .media-frame img, 
+    .media-frame video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Keeps media filling the frame */
+    }
+
+    .carousel-caption {
+        padding: 10px;
+        border-top: 1px dashed var(--text-muted);
+        color: var(--text-main);
+        font-size: 1.1rem;
+        min-height: 60px; /* Prevents layout jumping */
+    }
+
+    .carousel-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding: 0 5px;
+    }
+
+    .carousel-btn {
+        background: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--border-color);
+        font-family: inherit; /* Uses your native font stack */
+        font-size: 1.1rem;
+        padding: 5px 15px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.1s;
+    }
+
+    .carousel-btn:hover {
+        background: var(--border-color);
+        color: var(--bg-color);
+    }
+
+    .carousel-indicator {
+        color: var(--highlight);
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
     </style>
 </head>
 <body>
@@ -379,10 +466,9 @@
                     I specialize in <strong>C++, Python and Blueprints </strong>, with a strong focus on creating dynamic,
                     data-driven systems that empower designers and artists.</p>
                 <p>
-                    <iframe width="500" height="315"
-                    src="https://www.youtube.com/embed/SMF5u0gGnLE?autoplay=1&mute=1"
-                    style="justify-content: center; display: block; margin: 0 auto;">
-                    </iframe>
+                    <video width="500" height="315" controls autoplay muted style="justify-content: center; display: block; margin: 0 auto;">
+                        <source src="videos/UnworthyRoses/UW_Trailer.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
                 </p>
             </div>
 
@@ -445,6 +531,7 @@
                     <p>
                         Currently working on multiple Unnanounced Projects, with lots of Unreal Tools and Unreal NDAs!
                     </p>
+                    <img src="Img/MainframeLogo.png" alt="NDAs" style="width: 100%; max-width: 400px; display: block; margin: 20px auto;">
                 </div>
             </div>
 
@@ -459,10 +546,80 @@
                 <div id="proj-1" class="sub-content active">
                     <p><strong>Unworthy Roses</strong></p>
                     <p>A 3D, Top-Down Perspective Online Co-op Action-Adventure game where you play as two Demon Huntresses in their journey into the Underworld!</p>
+                    <p><a href="https://vfs-gdpg.itch.io/unworthy-roses" target="_blank" style="color: white;">Play it now with a friend!</a></p>
+                    <p>Here are some of the features I implemented for the game:</p>
+
+                    <div class="carousel-container">
+                        <div class="carousel-screen">
+                            
+                            <div class="carousel-slide active">
+                                <div class="media-frame">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="videos/UnworthyRoses/UW_Menus.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <div class="carousel-caption">
+                                    > FEATURE_01: UI Menus Logic - UMG, C++ and Blueprints.
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="media-frame">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="videos/UnworthyRoses/UW_Gauges.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <div class="carousel-caption">
+                                    > FEATURE_02: HUD Elements - Health Bar, Ultimate Gauge Bar, Action Buttons, Ultimate Mode. Built with UMG and C++.
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="media-frame">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="videos/UnworthyRoses/InteractionInterface.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <div class="carousel-caption">
+                                    > FEATURE_03: Interaction Interface - Every object that the player can interact with has a dynamic widget above it. Built with UMG and C++.
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="media-frame">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="videos/UnworthyRoses/UW_Puzzles.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <div class="carousel-caption">
+                                    > FEATURE_04: Puzzle Solving - Engaging puzzles that challenge the player's problem-solving skills, powered by the Interaction Interface. Built with UMG and C++.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="carousel-controls">
+                            <button class="carousel-btn prev-btn">PREV</button>
+                            <span class="carousel-indicator">1 / 4</span>
+                            <button class="carousel-btn next-btn">NEXT ></button>
+                        </div>
+                    </div>
                 </div>
                 <div id="proj-2" class="sub-content">
                     <p><strong>A Game of Dragon</strong></p>
                     <p>A Third-Person, Casual Adventure game where you play as Barnon, a baby dragon in search of his older brothers. Explore The Island, face platform sections and solve puzzles in a real-time chill game!</p>
+                    <p>I worked on the Day/Night Cycle and Weather System that affects the gameplay and atmosphere.</p>
+                    <p><a href="https://leviackerman.itch.io/a-game-of-dragon" target="_blank" style="color: white;">Play it now!</a></p>
+                    <div class="media-frame">
+                        <video autoplay loop muted playsinline>
+                            <source src="videos/AGOD/DayNight.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </div>
                 <div id="proj-3" class="sub-content">
                     <p><strong>Turn-Based JRPG Portfolio</strong></p>
@@ -471,7 +628,7 @@
             </div>
 
             <div id="panel-contact" class="content-window">
-                <h2>Contact Me</h2>
+                <h2>Resume</h2>
                 <p>Feel free to reach out to me through any of the contact methods listed on the left panel!</p>
                 <p>My Resume as of March 2026:</p>
                 <p style="align-content: flex-end; align-items: center; display: flex; justify-content: center;">
@@ -488,7 +645,7 @@
                 <button class="menu-btn" data-target="panel-about">1. PROFESSIONAL EXPERIENCE</button>
                 <button class="menu-btn" data-target="panel-credits">2. CREDITS</button>
                 <button class="menu-btn" data-target="panel-projects">3. PROJECTS</button>
-                <button class="menu-btn" data-target="panel-contact">4. CONTACT</button>
+                <button class="menu-btn" data-target="panel-contact">4. RESUME</button>
             </div>
         </div>
 
@@ -571,6 +728,45 @@
 
                 button.classList.add('active');
                 document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // --- CAROUSEL LOGIC ---
+        const carousels = document.querySelectorAll('.carousel-container');
+
+        carousels.forEach(carousel => {
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const prevBtn = carousel.querySelector('.prev-btn');
+            const nextBtn = carousel.querySelector('.next-btn');
+            const indicator = carousel.querySelector('.carousel-indicator');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                // Hide all slides
+                slides.forEach(slide => slide.classList.remove('active'));
+                
+                // Show current slide
+                slides[currentIndex].classList.add('active');
+                
+                // Update text indicator (e.g., "2 / 3")
+                indicator.textContent = `${currentIndex + 1} / ${slides.length}`;
+            }
+
+            // Setup audio for buttons (optional, uses the audio system we built)
+            prevBtn.addEventListener('mouseenter', () => playSound('hover'));
+            nextBtn.addEventListener('mouseenter', () => playSound('hover'));
+
+            prevBtn.addEventListener('click', () => {
+                playSound('click');
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateCarousel();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                playSound('click');
+                // If we are on the last slide, loop back to 0. Otherwise, go to the next slide.
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateCarousel();
             });
         });
     </script>
