@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miguel Villasis Miranda - UE DEV</title>
+    <title>Miguel Villasis Miranda - UE DEV | Hi-Fi Studio & Vinyl Archives</title>
+    <meta name="description"
+        content="Portfolio of Miguel Villasis Miranda, Senior Unreal Engine Developer with 6+ years experience in C++, Python, Blueprints, and Pipeline tools. Styled in an analog Hi-Fi Turntable & Vinyl theme.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #050a0e;
-            --panel-bg: rgba(10, 20, 30, 0.9);
-            --border-color: #00ffcc; 
-            --text-main: #e0f8f5;
-            --text-muted: #5b8c85;
-            --highlight: #68b5bf; 
+            /* Hi-Fi Studio Wood & Metal Palette */
+            --bg-deep: #0e0c0b;
+            --bg-walnut: #181512;
+            --bg-cabinet: #221d19;
+            --chassis-metal: #2e2925;
+            --chassis-metal-light: #433c37;
+            --brass-gold: #d4a359;
+            --brass-bright: #f0c37b;
+            --brass-dark: #8c642d;
+            --amber-glow: #ff9e2c;
+            --amber-soft: rgba(255, 158, 44, 0.15);
+            --meter-dial: #f5eedb;
+            --meter-ink: #2b221b;
+
+            /* Liner Notes Parchment Palette */
+            --parchment: #f6f1e7;
+            --parchment-card: #ece4d2;
+            --parchment-border: #d4c7b0;
+            --ink-main: #201c19;
+            --ink-muted: #645a50;
+            --ink-light: #8e8376;
+            --ink-red: #a72d24;
+            --groove-black: #111010;
+
+            /* Cardboard / Jacket Accents */
+            --jacket-1: #2a3439;
+            /* Navy slate */
+            --jacket-2: #3f2f27;
+            /* Rich mahogany */
+            --jacket-3: #2d382e;
+            /* Studio olive */
+            --jacket-4: #423047;
+            /* Plum lacquer */
+
+            /* Shadows & Depth */
+            --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --shadow-deep: 0 16px 35px rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 15px rgba(212, 163, 89, 0.35);
         }
 
         * {
@@ -21,417 +64,1391 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px; 
-            color: var(--text-main);
-            font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
+            background-color: var(--bg-deep);
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(67, 45, 29, 0.3) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+            color: #d8cebe;
+            font-family: 'Space Grotesk', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Allow scrolling on smaller screens */
-            overflow-y: auto; 
-            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 25px 20px 40px;
         }
 
-        /* The Main Game Screen Container */
-        #game-screen {
+        /* --- OVERALL CONSOLE CONTAINER --- */
+        #hifi-console {
             width: 100%;
-            max-width: 1400px;
-            /* Removed fixed 85vh height to allow dynamic sizing */
-            min-height: 85vh; 
+            max-width: 1440px;
+            min-height: 88vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            gap: 30px;
+            gap: 25px;
+            position: relative;
         }
 
-        /* Top Section: Character Stats & Dynamic Panels */
+        /* --- CONSOLE HEADER / TOP CHASSIS --- */
+        .console-header {
+            background: linear-gradient(180deg, #2b2520 0%, #1c1815 100%);
+            border: 1px solid #4a3e35;
+            border-bottom: 2px solid var(--brass-dark);
+            border-radius: 6px;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), var(--shadow-subtle);
+        }
+
+        .chassis-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--brass-bright);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-badge::before {
+            content: '●';
+            color: var(--amber-glow);
+            font-size: 0.9rem;
+            filter: drop-shadow(0 0 6px var(--amber-glow));
+            animation: pulseBulb 3s infinite ease-in-out;
+        }
+
+        .chassis-model {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            color: #9f8f7c;
+            border-left: 1px solid #4a3f36;
+            padding-left: 14px;
+            text-transform: uppercase;
+        }
+
+        .chassis-status-strip {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .pilot-lamp {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #b3a492;
+        }
+
+        .lamp-bulb {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #443528;
+            border: 1px solid #231c16;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .lamp-bulb.lit-amber {
+            background: #ffab38;
+            border-color: #ffe6a3;
+            box-shadow: 0 0 10px #ff9e2c, 0 0 20px rgba(255, 158, 44, 0.4), inset 0 1px 2px #fff;
+        }
+
+        .lamp-bulb.lit-green {
+            background: #4cd964;
+            border-color: #b4f5c0;
+            box-shadow: 0 0 10px #4cd964, inset 0 1px 2px #fff;
+        }
+
+        /* Discreet Audio Toggle Button */
+        .audio-toggle-btn {
+            background: linear-gradient(180deg, #362e28 0%, #201a16 100%);
+            border: 1px solid #5a4b3f;
+            border-radius: 4px;
+            color: var(--brass-bright);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .audio-toggle-btn:hover {
+            border-color: var(--brass-bright);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .audio-toggle-btn.muted {
+            color: #8c7f71;
+            border-color: #3d342c;
+        }
+
+        .audio-toggle-btn .speaker-icon {
+            font-size: 0.95rem;
+        }
+
+        /* --- DISPLAY AREA: AMPLIFIER & TURNTABLE / LINER NOTES --- */
         #display-area {
             display: flex;
-            gap: 10px;
+            gap: 25px;
             flex-grow: 1;
+            align-items: stretch;
         }
 
-        /* Character/Player Banner */
+        /* --- LEFT COLUMN: HI-FI AMPLIFIER / ARTIST DOSSIER --- */
         .player-stats {
-            background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            padding: 20px;
-            width: 360px;
-            /* box-shadow: 0 0 10px rgba(0, 255, 204, 0.2); */
+            background: linear-gradient(180deg, #241f1b 0%, #161310 100%);
+            border: 2px solid #3d332a;
+            border-radius: 6px;
+            padding: 24px;
+            width: 380px;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            max-height: 600px;
-            /* Prevents the stat box from shrinking */
-            flex-shrink: 0; 
+            box-shadow: var(--shadow-deep), inset 0 0 60px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
-        /* Profile Picture Container */
+        /* Brass Corner Brackets */
+        .player-stats::before,
+        .player-stats::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: var(--brass-dark);
+            pointer-events: none;
+        }
+
+        .player-stats::before {
+            top: 6px;
+            left: 6px;
+            border-top: 2px solid var(--brass-dark);
+            border-left: 2px solid var(--brass-dark);
+        }
+
+        .player-stats::after {
+            bottom: 6px;
+            right: 6px;
+            border-bottom: 2px solid var(--brass-dark);
+            border-right: 2px solid var(--brass-dark);
+        }
+
+        /* Polaroid Frame for Profile */
+        .polaroid-frame {
+            background: #faf6ee;
+            padding: 10px 10px 24px 10px;
+            border-radius: 2px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 18px;
+            width: 100%;
+            max-width: 250px;
+            transform: rotate(-1.5deg);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* Tape on Polaroid */
+        .polaroid-frame::before {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: 35%;
+            width: 70px;
+            height: 18px;
+            background: rgba(230, 215, 180, 0.65);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transform: rotate(2deg);
+            backdrop-filter: blur(1px);
+        }
+
         .profile-pic-container {
             width: 100%;
-            aspect-ratio: 1 / 2;
-            border: 2px solid var(--text-muted);
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--text-muted);
+            aspect-ratio: 1 / 1.15;
+            background: #111;
             overflow: hidden;
+            border: 1px solid #d9d0be;
         }
 
         .profile-pic-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(10%) contrast(120%);
+            filter: contrast(108%) saturate(95%) sepia(8%);
+            transition: filter 0.3s ease;
         }
 
-        .player-stats h1 {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            border-bottom: 2px solid var(--text-muted);
-            padding-bottom: 5px;
-            color: var(--border-color);
-            /* text-shadow: 0 0 5px var(--border-color); */
+        .polaroid-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: #4a4138;
             text-align: center;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Artist Bio Heading */
+        .amp-artist-title {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .amp-artist-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--brass-bright);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .amp-artist-title .artist-subtitle {
+            font-size: 0.8rem;
+            color: #9f8e7d;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Specs readout */
+        .stat-container-mobile {
+            width: 100%;
         }
 
         .stat-line {
             display: flex;
             justify-content: space-between;
-            margin: 8px 0;
-            font-size: 1.1rem;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(138, 120, 102, 0.2);
+            font-size: 0.92rem;
+            color: #c9bea9;
         }
 
+        .stat-line span:first-child {
+            color: #8b7d6e;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-line span:last-child {
+            font-weight: 600;
+            color: #ded4c3;
+        }
+
+        /* Analog VU Meter / Level Meter for Experience */
+        .vu-meter-section {
+            margin: 16px 0 20px;
+            background: #181412;
+            border: 1px solid #3d3229;
+            border-radius: 4px;
+            padding: 12px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .vu-meter-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--brass-bright);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .vu-dial-window {
+            background: linear-gradient(180deg, #f9f4e8 0%, #ded4bf 100%);
+            border: 1px solid #3a322b;
+            border-radius: 3px;
+            padding: 8px 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.25), 0 0 15px rgba(255, 187, 85, 0.15);
+        }
+
+        .vu-dial-window::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .vu-ticks {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #3b3026;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .vu-ticks .redline {
+            color: #b02a20;
+        }
+
+        /* Dual Channel Needle / Bars */
         .exp-bar-container {
             width: 100%;
-            height: 15px;
-            background: #111;
-            border: 1px solid var(--text-muted);
-            margin-top: 5px;
-            margin-bottom: 15px;
+            height: 12px;
+            background: #2b231d;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #4a3e35;
         }
 
         .exp-bar-fill {
             height: 100%;
-            width: 80%; 
-            background: var(--border-color);
-            box-shadow: 0 0 8px var(--border-color);
+            width: 82%;
+            /* Calibrated to 6 years / Senior metric */
+            background: linear-gradient(90deg, #c4943f 0%, #e5b054 75%, #d94d3a 92%);
+            box-shadow: 0 0 8px rgba(229, 176, 84, 0.6);
+            position: relative;
+            transition: width 1s ease;
         }
 
-        /* Persistent Contact Info inside Stats */
+        .exp-bar-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #fff;
+            box-shadow: 0 0 6px #fff;
+        }
+
+        .vu-meter-footer {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #645648;
+            margin-top: 5px;
+        }
+
+        /* Persistent Contact Info - Styled as Engraved Brass Plate */
         .persistent-contact {
-            margin-top: auto; /* Pushes to the bottom of the flex container */
-            border-top: 1px dashed var(--text-muted);
-            padding-top: 15px;
-            font-size: 1.1rem;
-            color: var(--text-main);
+            margin-top: auto;
+            background: linear-gradient(180deg, #1c1815 0%, #13100e 100%);
+            border: 1px solid #3d3229;
+            border-radius: 4px;
+            padding: 14px;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
         }
 
-        .persistent-contact p {
-            margin-bottom: 5px;
-            font-size: 1.1rem;
+        .contact-plate-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            color: var(--brass-bright);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #3a3027;
+            padding-bottom: 4px;
             display: flex;
             justify-content: space-between;
         }
 
-        .contact-label {
-            color: var(--text-muted);
+        .persistent-contact p {
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Dynamic Content Panels */
-        .content-window {
-            background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            padding: 30px;
+        .persistent-contact p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-label {
+            color: #8c7d6c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+
+        .contact-link {
+            color: #ded4c3;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .contact-link:hover {
+            color: var(--brass-bright);
+            text-decoration: underline;
+        }
+
+        /* --- RIGHT COLUMN: TURNTABLE & ACTIVE LINER NOTES STAGE --- */
+        .stage-container {
+            display: flex;
+            flex-direction: column;
             flex-grow: 1;
-            /* box-shadow: 0 0 15px rgba(0, 255, 204, 0.1); */
+            gap: 20px;
+            min-width: 0;
+            /* Prevents flex overflow */
+        }
+
+        /* --- TURNTABLE COMPONENT DECK --- */
+        .turntable-deck {
+            background: linear-gradient(180deg, #241f1c 0%, #171412 100%);
+            border: 2px solid #42362c;
+            border-radius: 6px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-deep), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Brushed Turntable Platter Area */
+        .turntable-mechanism {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            width: 100%;
+        }
+
+        .platter-chassis {
+            width: 170px;
+            height: 170px;
+            flex-shrink: 0;
+            background: radial-gradient(circle, #38312b 0%, #1f1b18 70%, #110e0d 100%);
+            border-radius: 50%;
+            border: 4px solid #5a4b3d;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* The Spinning Vinyl Record */
+        .vinyl-disc {
+            width: 154px;
+            height: 154px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, transparent 28%, rgba(255, 255, 255, 0.05) 30%, transparent 32%),
+                repeating-radial-gradient(circle, #0e0d0c 0, #0e0d0c 2px, #1c1917 3px, #0e0d0c 4px);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .vinyl-disc.spinning {
+            animation: spinPlatter 2.8s linear infinite;
+        }
+
+        @keyframes spinPlatter {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Record Sheen Reflection */
+        .vinyl-disc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 35deg,
+                    rgba(255, 255, 255, 0.12) 0deg,
+                    transparent 45deg,
+                    rgba(255, 255, 255, 0.15) 90deg,
+                    transparent 135deg,
+                    rgba(255, 255, 255, 0.12) 180deg,
+                    transparent 225deg,
+                    rgba(255, 255, 255, 0.15) 270deg,
+                    transparent 315deg,
+                    rgba(255, 255, 255, 0.12) 360deg);
+            pointer-events: none;
+        }
+
+        /* Spindle Center Label */
+        .vinyl-label {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #b8863b 0%, #7e551e 100%);
+            border: 2px solid #d4a359;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+            z-index: 2;
+            transition: background 0.4s ease;
+        }
+
+        .vinyl-label .label-rpm {
+            font-size: 0.45rem;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .vinyl-label .label-title {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            margin: 2px 0;
+            max-width: 48px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .vinyl-label .spindle-hole {
+            width: 7px;
+            height: 7px;
+            background: #111;
+            border-radius: 50%;
+            border: 1px solid #d4a359;
+            margin-top: 1px;
+        }
+
+        /* Tonearm Assembly */
+        .tonearm-assembly {
+            position: relative;
+            width: 50px;
+            height: 140px;
+            flex-shrink: 0;
+        }
+
+        .tonearm-base {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #8a7868 0%, #3e352d 100%);
+            border: 2px solid #5a4c3e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .tonearm-pivot {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 8px;
+            height: 120px;
+            transform-origin: top center;
+            transform: rotate(-35deg);
+            /* Parked position */
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 5;
+        }
+
+        .tonearm-pivot.playing {
+            transform: rotate(6deg);
+            /* Over the record groove */
+        }
+
+        .tonearm-rod {
+            width: 4px;
+            height: 105px;
+            background: linear-gradient(90deg, #c4b8a8, #eae4dc, #756a5d);
+            margin: 0 auto;
+            border-radius: 2px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .tonearm-headshell {
+            width: 12px;
+            height: 22px;
+            background: #1a1614;
+            border: 1px solid var(--brass-bright);
+            border-radius: 2px;
+            margin: -2px auto 0;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .tonearm-headshell::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 4px;
+            width: 3px;
+            height: 4px;
+            background: #fff;
+            box-shadow: 0 0 4px var(--amber-glow);
+        }
+
+        /* Now Playing Track Details */
+        .turntable-info {
+            flex-grow: 1;
+            padding-left: 10px;
+        }
+
+        .now-playing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            color: var(--brass-bright);
+            background: rgba(212, 163, 89, 0.12);
+            border: 1px solid rgba(212, 163, 89, 0.3);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .now-playing-badge::before {
+            content: '▶';
+            font-size: 0.6rem;
+            color: var(--amber-glow);
+        }
+
+        .album-header-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f5eedb;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .album-header-catalog {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #9f8e7d;
+            letter-spacing: 1px;
+        }
+
+        /* --- LINER NOTES READING PANEL (ALBUM BACK SLEEVE) --- */
+        .content-window {
+            background-color: var(--parchment);
+            background-image:
+                radial-gradient(circle at 80% 20%, rgba(212, 163, 89, 0.08) 0%, transparent 60%),
+                linear-gradient(#eee6d5 1px, transparent 1px);
+            background-size: 100% 100%, 100% 28px;
+            border: 8px solid var(--parchment-card);
+            outline: 2px solid #b8ab94;
+            border-radius: 4px;
+            padding: 35px 40px;
+            flex-grow: 1;
+            box-shadow: var(--shadow-deep), inset 0 0 25px rgba(184, 155, 120, 0.2);
             position: relative;
             overflow-y: auto;
-            max-height: auto;
+            color: var(--ink-main);
             display: none;
+            min-height: 480px;
         }
 
         .content-window.active {
             display: block;
-            animation: scanline 0.2s ease-out forwards;
+            animation: sleeveReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes scanline {
-            0% { transform: scaleY(0.1); opacity: 0; }
-            100% { transform: scaleY(1); opacity: 1; }
+        @keyframes sleeveReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.99);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Liner Notes Cardboard Stamping Header */
+        .liner-meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid var(--ink-main);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .liner-catalog-stamp {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--ink-red);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .liner-side-indicator {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--ink-muted);
+            text-transform: uppercase;
         }
 
         .content-window h2 {
-            color: var(--highlight);
-            margin-bottom: 15px;
-            font-size: 2.5rem;
-            /* text-shadow: 0 0 5px var(--highlight); */
+            font-family: 'Playfair Display', serif;
+            color: var(--ink-main);
+            font-size: 2.1rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
-        p, li {
-            font-size: 1.4rem;
-            line-height: 1.4;
-            margin-bottom: 10px;
+        .content-window p,
+        .content-window li {
+            font-size: 1.08rem;
+            line-height: 1.68;
+            color: #332d27;
+            margin-bottom: 14px;
         }
 
-        ul { margin-left: 20px; }
+        .content-window strong {
+            color: var(--ink-main);
+            font-weight: 700;
+        }
 
-        /* Inner Tabs Navigation */
+        .content-window ul {
+            margin-left: 24px;
+            margin-bottom: 18px;
+        }
+
+        .content-window li {
+            margin-bottom: 8px;
+        }
+
+        /* Sub-Nav Track Selector Buttons */
         .sub-nav {
             display: flex;
-            flex-wrap: wrap; /* Allows tabs to wrap on small screens */
+            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--text-muted);
-            padding-bottom: 10px;
+            margin: 20px 0;
+            border-bottom: 1px solid var(--parchment-border);
+            padding-bottom: 12px;
         }
 
         .sub-btn {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
-            padding: 5px 15px;
+            background: #dfd4be;
+            border: 1px solid #baa98f;
+            color: var(--ink-main);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 8px 18px;
             cursor: pointer;
+            border-radius: 3px;
             text-transform: uppercase;
-            transition: all 0.1s;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .sub-btn:hover {
-            border-color: var(--border-color);
-            color: var(--border-color);
+            background: #ede3d0;
+            border-color: var(--ink-red);
+            color: var(--ink-red);
+            transform: translateY(-1px);
         }
 
         .sub-btn.active {
-            background: var(--border-color);
-            color: var(--bg-color);
-            border-color: var(--border-color);
-            font-weight: bold;
+            background: var(--ink-main);
+            color: var(--parchment);
+            border-color: var(--ink-main);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .sub-content { display: none; }
-        .sub-content.active { display: block; }
+        .sub-content {
+            display: none;
+        }
 
-        /* Bottom Section: Combat Menu */
-        #command-menu-container {
-            align-self: flex-end;
+        .sub-content.active {
+            display: block;
+            animation: fadeInTrack 0.3s ease-in;
+        }
+
+        @keyframes fadeInTrack {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- MEDIA FRAMES & VIDEO INTEGRATION --- */
+        .media-deck-frame {
+            border: 3px solid #2a241f;
+            background: #110e0c;
+            border-radius: 4px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            margin: 18px 0;
+        }
+
+        .media-deck-frame video,
+        .media-deck-frame iframe {
             width: 100%;
+            display: block;
+            border: none;
+        }
+
+        /* Responsive 16:9 Aspect Ratio Container */
+        .aspect-16-9 {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0d0b0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aspect-16-9 iframe,
+        .aspect-16-9 video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Link buttons inside liner notes */
+        .liner-action-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--ink-main);
+            color: #fff !important;
+            padding: 9px 18px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 10px 0 15px;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .liner-action-link:hover {
+            background: var(--ink-red);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- CAROUSEL STYLED AS STUDIO FILMSTRIP / CONTACT SHEET --- */
+        .carousel-container {
+            border: 2px solid #3d3329;
+            background: #1a1614;
+            padding: 16px;
+            margin-top: 18px;
+            border-radius: 4px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            color: #e4dacb;
+        }
+
+        .filmstrip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--brass-bright);
+            letter-spacing: 1.5px;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #4a3e35;
+        }
+
+        .carousel-screen {
+            border: 1px solid #4a3f36;
+            background: #0d0b0a;
+            position: relative;
+            width: 100%;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: none;
+            flex-direction: column;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+            animation: slideFilm 0.35s ease-out;
+        }
+
+        @keyframes slideFilm {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .media-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .media-frame img,
+        .media-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            padding: 12px 14px;
+            background: #231e1a;
+            border-top: 1px solid #3d342c;
+            color: #eae1d3;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            padding: 0 4px;
+        }
+
+        .carousel-btn {
+            background: linear-gradient(180deg, #3d332b 0%, #241e19 100%);
+            border: 1px solid var(--brass-dark);
+            color: var(--brass-bright);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            padding: 8px 18px;
+            cursor: pointer;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .carousel-btn:hover {
+            background: var(--brass-bright);
+            color: #1a1512;
+            border-color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .carousel-indicator {
+            color: var(--brass-bright);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: #14110f;
+            padding: 5px 14px;
+            border-radius: 12px;
+            border: 1px solid #3f342a;
+        }
+
+        /* --- BOTTOM SECTION: THE VINYL CRATE / RECORD BIN --- */
+        #command-menu-container {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .crate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 14px;
+            padding: 0 6px;
         }
 
         .menu-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--brass-bright);
             text-transform: uppercase;
-            color: var(--border-color);
-            margin-bottom: 10px;
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .combat-menu {
+        .menu-title::before {
+            content: '❚❚';
+            font-size: 0.75rem;
+            color: var(--amber-glow);
+        }
+
+        .crate-instruction {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #8f806e;
+            text-transform: uppercase;
+        }
+
+        /* 4 Album Jackets in the Record Crate */
+        .record-crate {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            perspective: 1000px;
         }
 
-        .menu-btn {
-            background: #0a141e;
-            border: 2px solid var(--text-muted);
-            padding: 20px;
-            color: var(--text-main);
-            font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
-            text-transform: uppercase;
+        .album-sleeve {
+            position: relative;
+            background: linear-gradient(145deg, #2a231d, #1a1613);
+            border: 1px solid #4a3e33;
+            border-radius: 6px;
+            padding: 18px 16px;
             cursor: pointer;
             text-align: left;
-            position: relative;
-            transition: all 0.1s ease;
+            transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 125px;
         }
 
-        .menu-btn:hover {
-            border-color: var(--border-color);
-            color: var(--border-color);
-        }
-
-        .menu-btn.active {
-            background: var(--highlight);
-            color: white;
-            border-color: white;
-            box-shadow: 0 0 5px var(--highlight);
-        }
-
-        .menu-btn::before {
-            content: '>';
+        /* Spine / Edge Cardboard Texture */
+        .album-sleeve::before {
+            content: '';
             position: absolute;
-            left: -20px;
-            color: var(--border-color);
-            opacity: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 7px;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.4));
         }
 
-        .menu-btn:hover::before { opacity: 1; left: 10px; }
-        .menu-btn:hover { padding-left: 30px; }
-        .menu-btn.active { padding-left: 30px; }
-        .menu-btn.active::before { opacity: 1; left: 10px; color: white; }
+        /* Peeking Vinyl Record inside the Sleeve */
+        .peeking-vinyl {
+            position: absolute;
+            top: 15px;
+            right: -45px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: repeating-radial-gradient(circle, #0e0d0c 0, #0e0d0c 2px, #201c1a 3px, #0e0d0c 4px);
+            border: 2px solid #2d2621;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.7);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
 
-        /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 900px) {
-            body {
-                align-items: flex-start; /* Prevent top cutoff when scrolling */
+        .peeking-vinyl::after {
+            content: '';
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #a8793b;
+            border: 1px solid #ecc68a;
+        }
+
+        .album-sleeve:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--brass-bright);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+        }
+
+        .album-sleeve:hover .peeking-vinyl {
+            transform: translateX(-24px) rotate(45deg);
+        }
+
+        /* Active Sleeve State: Pulled Forward from the Crate */
+        .album-sleeve.active {
+            background: linear-gradient(145deg, #382c22, #211913);
+            border: 2px solid var(--brass-bright);
+            transform: translateY(-10px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 163, 89, 0.45);
+        }
+
+        .album-sleeve.active .peeking-vinyl {
+            transform: translateX(-35px) rotate(90deg);
+        }
+
+        .sleeve-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--brass-bright);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .sleeve-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f5eedb;
+            line-height: 1.25;
+            margin-bottom: 6px;
+            z-index: 2;
+            transition: color 0.2s ease;
+        }
+
+        .album-sleeve:hover .sleeve-title,
+        .album-sleeve.active .sleeve-title {
+            color: #fff;
+        }
+
+        .sleeve-tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            color: #a89987;
+            z-index: 2;
+        }
+
+        .now-playing-tag {
+            display: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--amber-glow);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        .album-sleeve.active .now-playing-tag {
+            display: block;
+        }
+
+        /* --- ANIMATIONS & UTILITIES --- */
+        @keyframes pulseBulb {
+
+            0%,
+            100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 5px var(--amber-glow));
             }
 
+            50% {
+                opacity: 0.7;
+                filter: drop-shadow(0 0 2px var(--amber-glow));
+            }
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1100px) {
             #display-area {
-                flex-direction: column; /* Stack the player stats and content window */
+                flex-direction: column;
             }
 
             .player-stats {
-                width: 100%; /* Take up full width on mobile */
-                flex-direction: row; /* Shift layout to horizontal for mobile efficiency */
+                width: 100%;
+                flex-direction: row;
                 flex-wrap: wrap;
                 gap: 20px;
+                padding: 20px;
             }
 
-            .profile-pic-container {
-                width: 120px; /* Make it smaller on mobile */
-                margin-bottom: 0;
+            .polaroid-frame {
+                margin: 0;
+                width: 160px;
+                flex-shrink: 0;
+            }
+
+            .amp-artist-title {
+                text-align: left;
             }
 
             .stat-container-mobile {
-                flex-grow: 1;
-                min-width: 200px;
+                flex: 1;
+                min-width: 260px;
             }
 
             .persistent-contact {
                 width: 100%;
-                margin-top: 0;
+                margin-top: 10px;
+            }
+
+            .record-crate {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 10px 30px;
+                align-items: flex-start;
+            }
+
+            .console-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .chassis-status-strip {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .turntable-mechanism {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .turntable-info {
+                padding-left: 0;
+            }
+
+            .tonearm-assembly {
+                display: none;
+                /* Streamline on mobile to save vertical space */
             }
 
             .content-window {
-                min-height: 400px; /* Ensure reading space on mobile */
+                padding: 24px 20px;
             }
 
-            #command-menu-container {
-                align-self: center; /* Center the menu on mobile */
+            .content-window h2 {
+                font-size: 1.6rem;
+            }
+
+            .record-crate {
+                grid-template-columns: 1fr;
             }
         }
-
-        @media (max-width: 500px) {
-            .combat-menu {
-                grid-template-columns: 1fr; /* 1 column grid for very small screens */
-            }
-            .player-stats h1 { text-align: left; }
-        }
-
-        /* --- CAROUSEL STYLES --- */
-    .carousel-container {
-        border: 1px solid var(--text-muted);
-        background: rgba(0, 0, 0, 0.4);
-        padding: 10px;
-        margin-top: 15px;
-        border-radius: 2px;
-    }
-
-    .carousel-screen {
-        border: 1px solid var(--border-color);
-        background: #000;
-        position: relative;
-        width: 100%;
-    }
-
-    .carousel-slide {
-        display: none;
-        flex-direction: column;
-    }
-
-    .carousel-slide.active {
-        display: flex;
-        animation: fadeIn 0.3s ease-in;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    /* 16:9 Aspect Ratio for Media */
-    .media-frame {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .media-frame img, 
-    .media-frame video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Keeps media filling the frame */
-    }
-
-    .carousel-caption {
-        padding: 10px;
-        border-top: 1px dashed var(--text-muted);
-        color: var(--text-main);
-        font-size: 1.1rem;
-        min-height: 60px; /* Prevents layout jumping */
-    }
-
-    .carousel-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-        padding: 0 5px;
-    }
-
-    .carousel-btn {
-        background: transparent;
-        border: 1px solid var(--border-color);
-        color: var(--border-color);
-        font-family: inherit; /* Uses your native font stack */
-        font-size: 1.1rem;
-        padding: 5px 15px;
-        cursor: pointer;
-        text-transform: uppercase;
-        transition: all 0.1s;
-    }
-
-    .carousel-btn:hover {
-        background: var(--border-color);
-        color: var(--bg-color);
-    }
-
-    .carousel-indicator {
-        color: var(--highlight);
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-
     </style>
 </head>
+
 <body>
 
-    <div id="game-screen">
-        
-        <div id="display-area">
-            
-            <div class="player-stats">
-                <div class="profile-pic-container">
-                    <img src="Img/ProfileP.jpg" alt="Profile Picture">
+    <main id="hifi-console">
+
+        <!-- CONSOLE TOP CHASSIS BAR -->
+        <header class="console-header">
+            <div class="chassis-brand">
+                <div class="brand-badge">Miguel Villasis: UE Dev</div>
+                <div class="chassis-model">MODEL MV-6 // HI-FI STEREO ARCHIVE</div>
+            </div>
+
+            <div class="chassis-status-strip">
+                <div class="pilot-lamp">
+                    <span id="power-bulb" class="lamp-bulb lit-amber"></span>
+                    <span>POWER</span>
                 </div>
-                
+                <div class="pilot-lamp">
+                    <span id="rpm-bulb" class="lamp-bulb lit-amber"></span>
+                    <span>33⅓ RPM</span>
+                </div>
+                <div class="pilot-lamp">
+                    <span id="stereo-bulb" class="lamp-bulb lit-green"></span>
+                    <span>STEREO</span>
+                </div>
+
+                <!-- Discreet Audio Toggle Button -->
+                <button id="audio-toggle-btn" class="audio-toggle-btn" title="Toggle analog sound effects"
+                    aria-label="Toggle sound effects">
+                    <span class="speaker-icon">🔊</span>
+                    <span id="audio-btn-label">SOUND: ON</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- DISPLAY AREA: AMPLIFIER DOSSIER & TURNTABLE / LINER NOTES -->
+        <div id="display-area">
+
+            <!-- LEFT: HI-FI AMPLIFIER & ARTIST DOSSIER -->
+            <aside class="player-stats">
+                <div class="polaroid-frame">
+                    <div class="profile-pic-container">
+                        <img src="Img/ProfileP.jpg" alt="Miguel Villasis Miranda Profile Picture">
+                    </div>
+                    <div class="polaroid-caption">MIGUEL</div>
+                </div>
+
                 <div class="stat-container-mobile">
-                    <h1>Miguel Villasis Miranda</h1>
+                    <div class="amp-artist-title">
+                        <h1>Miguel Villasis Miranda</h1>
+                        <div class="artist-subtitle">Dev Spec Sheet</div>
+                    </div>
+
                     <div class="stat-line">
                         <span>Class</span>
                         <span>UE Developer</span>
@@ -444,293 +1461,705 @@
                         <span>EXP</span>
                         <span>6 (years of experience)</span>
                     </div>
-                    <div class="exp-bar-container">
-                        <div class="exp-bar-fill"></div>
+
+                    <!-- ANALOG DUAL VU METER -->
+                    <div class="vu-meter-section">
+                        <div class="vu-meter-header">
+                            <span>VU LEVEL</span>
+                            <span>CALIBRATED // +2 dB</span>
+                        </div>
+                        <div class="vu-dial-window">
+                            <div class="vu-ticks">
+                                <span>-20</span>
+                                <span>-10</span>
+                                <span>-5</span>
+                                <span>0</span>
+                                <span class="redline">+3</span>
+                            </div>
+                            <div class="exp-bar-container">
+                                <div class="exp-bar-fill"></div>
+                            </div>
+                            <div class="vu-meter-footer">
+                                <span>CH-1 / 6 YRS EXP</span>
+                                <span>MASTER GAIN</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- PERSISTENT CONTACT: ENGRAVED BRASS FACEPLATE -->
                 <div class="persistent-contact">
-                    <p><span class="contact-label">Phone:</span> +1 (604) 404-5106</p>
-                    <p><span class="contact-label">Mail:</span> <a href="mailto:miguelvillasism@gmail.com" style="color: white;">miguelvillasism@gmail.com</a></p>
-                    <p><span class="contact-label">LinkedIn:</span>
-                        <a href="https://www.linkedin.com/in/miguel-villasismiranda/" target="_blank" style="color: white;">Miguel Villasis</a></p>
-                    <p><span class="contact-label">IMDB</span>
-                        <a href="https://www.imdb.com/name/nm13754785/" target="_blank" style="color: white;">IMDB Page</a></p>
-                </div>
-            </div>
-
-            <div id="panel-idle" class="content-window active">
-                <h2>Battle Start! Miguel Villasis Miranda</h2>    
-                <p>I am a passionate <strong>Unreal Engine </strong>Developer with 6+ years of experience crafting complex UI tools, expanding 
-                    engine capabilities, optimizing performance, and bridging the gap between art and code. 
-                    I specialize in <strong>C++, Python and Blueprints </strong>, with a strong focus on creating dynamic,
-                    data-driven systems that empower designers and artists.</p>
-                <p>
-                    <video width="500" height="315" controls autoplay muted style="justify-content: center; display: block; margin: 0 auto;">
-                        <source src="videos/UnworthyRoses/UW_Trailer.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                </p>
-            </div>
-
-            <div id="panel-about" class="content-window">   
-                <h2>Professional Experience</h2>
-                <p><strong>Unreal Engine Developer - 6 Years of Experience</strong></p>
-                <br>
-                <ul>
-                    <li>Currently employed at <strong> Mainframe Studios</strong> (2021-Present) as a <strong>Game Engine Pipeline Technical Developer on mutliple productions</strong></li>
-                    <li>From modifying the source code, to creating beautiful custom UIs and tools for artists and designers, my responbilities are extensive</li>
-                    <li>All tools, plugins and extensions have been developed in <strong>C++, Python, UMG, Slate and Blueprints</strong></li>
-                    <li>My work varies from expanding the <strong>Movie Render Pipeline</strong>, to optimizing and enabling <strong>fbx, USD, and Gaffer imports</strong></li>
-                    <li>Other technologies that I use include <strong>Perforce, Visual Studio, VSCode, Rez,</strong> etc. On both Linux and Windows I make sure the pipeline works! </li>
-                </ul>
-            </div>
-
-            <div id="panel-credits" class="content-window">
-                <h2>ANIMATION CREDITS</h2>
-                <div class="sub-nav">
-                    <button class="sub-btn active" data-parent="panel-credits" data-target="credit-1">Immortals</button>
-                    <button class="sub-btn" data-parent="panel-credits" data-target="credit-2">Unicorn Academy</button>
-                    <button class="sub-btn" data-parent="panel-credits" data-target="credit-3">Super Kitties S3</button>
-                    <button class="sub-btn" data-parent="panel-credits" data-target="credit-4">Unnanounced Projects</button>
-                </div>
-                
-                <div id="credit-1" class="sub-content active">
-                    <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
-                    <p><strong>Engine:</strong> Unreal Engine 5</p>
-                    <p>Currently under development</p>
+                    <div class="contact-plate-title">
+                        <span>DIRECT LINE</span>
+                        <span>MVM-HQ</span>
+                    </div>
                     <p>
-                        <iframe width="500" height="315"
-                        src="https://www.youtube.com/embed/eprcoVEos6E?autoplay=1&mute=1"
-                        style="justify-content: center; display: block; margin: 0 auto;">
-                        </iframe>
+                        <span class="contact-label">Phone:</span>
+                        <span>+1 (604) 404-5106</span>
+                    </p>
+                    <p>
+                        <span class="contact-label">Mail:</span>
+                        <a href="mailto:miguelvillasism@gmail.com" class="contact-link">miguelvillasism@gmail.com</a>
+                    </p>
+                    <p>
+                        <span class="contact-label">LinkedIn:</span>
+                        <a href="https://www.linkedin.com/in/miguel-villasismiranda/" target="_blank"
+                            rel="noopener noreferrer" class="contact-link">Miguel Villasis ↗</a>
+                    </p>
+                    <p>
+                        <span class="contact-label">IMDB:</span>
+                        <a href="https://www.imdb.com/name/nm13754785/" target="_blank" rel="noopener noreferrer"
+                            class="contact-link">IMDB Page ↗</a>
                     </p>
                 </div>
-                <div id="credit-2" class="sub-content">
-                    <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
-                    <p><strong>Engine:</strong> Unreal Engine 5</p>
-                    <p>
-                        <iframe width="500" height="315"
-                        src="https://www.youtube.com/embed/mkEA_y_cQD4?autoplay=1&mute=1"
-                        style="justify-content: center; display: block; margin: 0 auto;">
-                        </iframe>
-                    </p>
-                </div>
-                <div id="credit-3" class="sub-content">
-                    <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
-                    <p><strong>Engine:</strong> Unreal Engine 5</p>
-                    <p>
-                        <iframe width="500" height="315"
-                        src="https://www.youtube.com/embed/wfpB6ba8oA4?autoplay=1&mute=1"
-                        style="justify-content: center; display: block; margin: 0 auto;">
-                        </iframe>
-                    </p>
-                </div>
-                <div id="credit-4" class="sub-content">
-                    <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
-                    <p><strong>Engine:</strong> Unreal Engine 5</p>
-                    <p>
-                        Currently working on multiple Unnanounced Projects, with lots of Unreal Tools and Unreal NDAs!
-                    </p>
-                </div>
-            </div>
+            </aside>
 
-            <div id="panel-projects" class="content-window">
-                <h2>PERSONAL/SCHOOL PROJECTS</h2>
-                <div class="sub-nav">
-                    <button class="sub-btn active" data-parent="panel-projects" data-target="proj-1">Unworthy Roses</button>
-                    <button class="sub-btn" data-parent="panel-projects" data-target="proj-2">A Game of Dragon</button>
-                    <button class="sub-btn" data-parent="panel-projects" data-target="proj-3">Turn-Based JRPG Portfolio</button>
-                </div>
+            <!-- RIGHT: TURNTABLE & ACTIVE LINER NOTES SLEEVE -->
+            <section class="stage-container">
 
-                <div id="proj-1" class="sub-content active">
-                    <p><strong>Unworthy Roses</strong></p>
-                    <p>A 3D, Top-Down Perspective Online Co-op Action-Adventure game where you play as two Demon Huntresses in their journey into the Underworld!</p>
-                    <p><a href="https://vfs-gdpg.itch.io/unworthy-roses" target="_blank" style="color: white;">Play it now with a friend!</a></p>
-                    <p>Here are some of the features I implemented for the game:</p>
+                <!-- TURNTABLE COMPONENT -->
+                <div class="turntable-deck">
+                    <div class="turntable-mechanism">
 
-                    <div class="carousel-container">
-                        <div class="carousel-screen">
-                            
-                            <div class="carousel-slide active">
-                                <div class="media-frame">
-                                    <video autoplay loop muted playsinline>
-                                        <source src="videos/UnworthyRoses/UW_Menus.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <div class="carousel-caption">
-                                    > FEATURE_01: UI Menus Logic - UMG, C++ and Blueprints.
+                        <!-- Platter & Spinning Vinyl -->
+                        <div class="platter-chassis">
+                            <div id="vinyl-disc" class="vinyl-disc spinning">
+                                <div id="vinyl-label" class="vinyl-label">
+                                    <span class="label-rpm">33⅓ RPM</span>
+                                    <span id="label-track-title" class="label-title">INTRO</span>
+                                    <span class="spindle-hole"></span>
                                 </div>
                             </div>
-
-                            <div class="carousel-slide">
-                                <div class="media-frame">
-                                    <video autoplay loop muted playsinline>
-                                        <source src="videos/UnworthyRoses/UW_Gauges.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <div class="carousel-caption">
-                                    > FEATURE_02: HUD Elements - Health Bar, Ultimate Gauge Bar, Action Buttons, Ultimate Mode. Built with UMG and C++.
-                                </div>
-                            </div>
-
-                            <div class="carousel-slide">
-                                <div class="media-frame">
-                                    <video autoplay loop muted playsinline>
-                                        <source src="videos/UnworthyRoses/InteractionInterface.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <div class="carousel-caption">
-                                    > FEATURE_03: Interaction Interface - Every object that the player can interact with has a dynamic widget above it. Built with UMG and C++.
-                                </div>
-                            </div>
-
-                            <div class="carousel-slide">
-                                <div class="media-frame">
-                                    <video autoplay loop muted playsinline>
-                                        <source src="videos/UnworthyRoses/UW_Puzzles.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <div class="carousel-caption">
-                                    > FEATURE_04: Puzzle Solving - Engaging puzzles that challenge the player's problem-solving skills, powered by the Interaction Interface. Built with UMG and C++.
-                                </div>
-                            </div>
-
                         </div>
 
-                        <div class="carousel-controls">
-                            <button class="carousel-btn prev-btn">PREV</button>
-                            <span class="carousel-indicator">1 / 4</span>
-                            <button class="carousel-btn next-btn">NEXT ></button>
+                        <!-- Track Info Readout -->
+                        <div class="turntable-info">
+                            <div id="turntable-badge" class="now-playing-badge">Now Spinning • Track 01</div>
+                            <div id="turntable-album-title" class="album-header-title">Miguel Villasis
+                                Miranda</div>
+                            <div id="turntable-catalog-code" class="album-header-catalog">CATALOG NO: MVM-UE-2026 //
+                                MASTER HIGH-FIDELITY AUDIO</div>
                         </div>
+
+                        <!-- Mechanical Tonearm Assembly -->
+                        <div class="tonearm-assembly">
+                            <div class="tonearm-base"></div>
+                            <div id="tonearm-pivot" class="tonearm-pivot playing">
+                                <div class="tonearm-rod"></div>
+                                <div class="tonearm-headshell"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div id="proj-2" class="sub-content">
-                    <p><strong>A Game of Dragon</strong></p>
-                    <p>A Third-Person, Casual Adventure game where you play as Barnon, a baby dragon in search of his older brothers. Explore The Island, face platform sections and solve puzzles in a real-time chill game!</p>
-                    <p>I worked on the Day/Night Cycle and Weather System that affects the gameplay and atmosphere.</p>
-                    <p><a href="https://leviackerman.itch.io/a-game-of-dragon" target="_blank" style="color: white;">Play it now!</a></p>
-                    <div class="media-frame">
-                        <video autoplay loop muted playsinline>
-                            <source src="videos/AGOD/DayNight.mp4" type="video/mp4">
+
+                <!-- LINER NOTES / BACK COVER READING PANELS -->
+
+                <!-- 0. IDLE SHOWCASE PANEL -->
+                <article id="panel-idle" class="content-window active" aria-labelledby="heading-idle">
+                    <div class="liner-meta-header">
+                        <span class="liner-catalog-stamp">MVM-ARCHIVE // SIDE A • TRACK 01</span>
+                        <span class="liner-side-indicator">WELCOME SHOWCASE</span>
+                    </div>
+                    <h2 id="heading-idle">Welcome! My name is Miguel</h2>
+                    <p>I am a passionate <strong>Unreal Engine </strong>Developer with 6+ years of experience crafting
+                        complex UI tools, expanding
+                        engine capabilities, optimizing performance, and bridging the gap between art and code.
+                        I specialize in <strong>C++, Python and Blueprints </strong>, with a strong focus on creating
+                        dynamic,
+                        data-driven systems that empower designers and artists.</p>
+                    <div class="media-deck-frame">
+                        <video width="500" height="315" controls autoplay muted
+                            style="justify-content: center; display: block; margin: 0 auto; max-width: 100%;">
+                            <source src="videos/UnworthyRoses/UW_Trailer.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
-                </div>
-                <div id="proj-3" class="sub-content">
-                    <p><strong>Turn-Based JRPG Portfolio</strong></p>
-                    <p>A portfolio page based on the classic turn-based JRPGs of the 2000s menus. Do you like it? Thanks for checking it out!</p>
-                </div>
-            </div>
+                </article>
 
-            <div id="panel-contact" class="content-window">
-                <h2>Resume</h2>
-                <p>Feel free to reach out to me through any of the contact methods listed on the left panel!</p>
-                <p>My Resume as of March 2026:</p>
-                <p>
-                    <iframe src="docs/MiguelVillasisResume.pdf" width="100%" height="500px" style="border: none;">
-                    <p>Your browser does not support PDFs. <a href="docs/MiguelVillasisResume.pdf">Download the PDF</a>.</p>
-                    </iframe>
-                </p>
-            </div>
+                <!-- 1. ABOUT / PROFESSIONAL EXPERIENCE PANEL -->
+                <article id="panel-about" class="content-window" aria-labelledby="heading-about">
+                    <div class="liner-meta-header">
+                        <span class="liner-catalog-stamp">LP 01 // SIDE A • TRACK 02</span>
+                        <span class="liner-side-indicator">Professional Experience</span>
+                    </div>
+                    <h2 id="heading-about">Professional Experience</h2>
+                    <p><strong>Unreal Engine Developer - 6 Years of Experience</strong></p>
+                    <br>
+                    <ul>
+                        <li>Currently employed at <strong> Mainframe Studios</strong> (2021-Present) as a <strong>Game
+                                Engine Pipeline Technical Developer on mutliple productions</strong></li>
+                        <li>From modifying the source code, to creating beautiful custom UIs and tools for artists and
+                            designers, my responbilities are extensive</li>
+                        <li>All tools, plugins and extensions have been developed in <strong>C++, Python, UMG, Slate and
+                                Blueprints</strong></li>
+                        <li>My work varies from expanding the <strong>Movie Render Pipeline</strong>, to optimizing and
+                            enabling <strong>fbx, USD, and Gaffer imports</strong></li>
+                        <li>Other technologies that I use include <strong>Perforce, Visual Studio, VSCode, Rez,</strong>
+                            etc. On both Linux and Windows I make sure the pipeline works! </li>
+                    </ul>
+                </article>
+
+                <!-- 2. CREDITS PANEL -->
+                <article id="panel-credits" class="content-window" aria-labelledby="heading-credits">
+                    <div class="liner-meta-header">
+                        <span class="liner-catalog-stamp">LP 02 // SIDE B • TRACK 01</span>
+                        <span class="liner-side-indicator">Credits</span>
+                    </div>
+                    <h2 id="heading-credits">ANIMATION CREDITS</h2>
+                    <div class="sub-nav" role="tablist">
+                        <button class="sub-btn active" data-parent="panel-credits" data-target="credit-1">Xbox Mattel
+                            Bricks Launch Trailer</button>
+                        <button class="sub-btn" data-parent="panel-credits" data-target="credit-2">Unicorn
+                            Academy</button>
+                        <button class="sub-btn" data-parent="panel-credits" data-target="credit-3">Super Kitties
+                            S3</button>
+                        <button class="sub-btn" data-parent="panel-credits" data-target="credit-4">Unnanounced
+                            Projects</button>
+                    </div>
+
+                    <div id="credit-1" class="sub-content active">
+                        <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
+                        <p><strong>Engine:</strong> Unreal Engine 5</p>
+                        <div style="place-items: center; display: flex; justify-content: center; align-items: center;">
+                            <blockquote class="twitter-tweet" data-media-max-width="560">
+                                <p lang="en" dir="ltr">Wanna build gaming history? 🎮<br>
+                                    <br>Get your hands on the Original XBOX Console Collector Building Set from Mattel
+                                    Brick Shop:
+                                    <a href="https://t.co/LoL6GTj5xm">https://t.co/LoL6GTj5xm</a> <a
+                                        href="https://t.co/kcBnKNGADU">pic.twitter.com/kcBnKNGADU</a>
+                                </p>&mdash; XBOX (@XBOX) <a
+                                    href="https://x.com/XBOX/status/2090121700155244948?ref_src=twsrc%5Etfw">August 19,
+                                    2026</a>
+                            </blockquote>
+                            <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+                        </div>
+                    </div>
+                    <div id="credit-2" class="sub-content">
+                        <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
+                        <p><strong>Engine:</strong> Unreal Engine 5</p>
+                        <div class="media-deck-frame aspect-16-9">
+                            <iframe src="https://www.youtube.com/embed/mkEA_y_cQD4?enablejsapi=1&autoplay=1&mute=1"
+                                title="Unicorn Academy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div id="credit-3" class="sub-content">
+                        <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
+                        <p><strong>Engine:</strong> Unreal Engine 5</p>
+                        <div class="media-deck-frame aspect-16-9">
+                            <iframe src="https://www.youtube.com/embed/wfpB6ba8oA4?enablejsapi=1&autoplay=1&mute=1"
+                                title="Super Kitties Season 3"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div id="credit-4" class="sub-content">
+                        <p><strong>Role:</strong> Game Engine Pipeline Developer</p>
+                        <p><strong>Engine:</strong> Unreal Engine 5</p>
+                        <p>
+                            Currently working on multiple Unnanounced Projects, with lots of Unreal Tools and Unreal
+                            NDAs!
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 3. PERSONAL PROJECTS PANEL -->
+                <article id="panel-projects" class="content-window" aria-labelledby="heading-projects">
+                    <div class="liner-meta-header">
+                        <span class="liner-catalog-stamp">LP 03 // SIDE B • TRACK 02</span>
+                        <span class="liner-side-indicator">B-SIDES & PROTOTYPES</span>
+                    </div>
+                    <h2 id="heading-projects">PERSONAL/SCHOOL PROJECTS</h2>
+                    <div class="sub-nav" role="tablist">
+                        <button class="sub-btn active" data-parent="panel-projects" data-target="proj-1">Unworthy
+                            Roses</button>
+                        <button class="sub-btn" data-parent="panel-projects" data-target="proj-2">A Game of
+                            Dragon</button>
+                    </div>
+
+                    <div id="proj-1" class="sub-content active">
+                        <p><strong>Unworthy Roses</strong></p>
+                        <p>A 3D, Top-Down Perspective Online Co-op Action-Adventure game where you play as two Demon
+                            Huntresses in their journey into the Underworld!</p>
+                        <p><a href="https://vfs-gdpg.itch.io/unworthy-roses" target="_blank" rel="noopener noreferrer"
+                                class="liner-action-link">Play it now with a friend! ↗</a></p>
+                        <p>Here are some of the features I implemented for the game:</p>
+
+                        <!-- ARCHIVAL FILMSTRIP CAROUSEL -->
+                        <div class="carousel-container">
+                            <div class="filmstrip-header">
+                                <span>GAMEPLAY MECHANICS</span>
+                                <span>35MM STUDIO ARCHIVE</span>
+                            </div>
+
+                            <div class="carousel-screen">
+
+                                <div class="carousel-slide active">
+                                    <div class="media-frame">
+                                        <video autoplay loop muted playsinline>
+                                            <source src="videos/UnworthyRoses/UW_Menus.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        &gt; FEATURE_01: UI Menus Logic - UMG, C++ and Blueprints.
+                                    </div>
+                                </div>
+
+                                <div class="carousel-slide">
+                                    <div class="media-frame">
+                                        <video autoplay loop muted playsinline>
+                                            <source src="videos/UnworthyRoses/UW_Gauges.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        &gt; FEATURE_02: HUD Elements - Health Bar, Ultimate Gauge Bar, Action Buttons,
+                                        Ultimate Mode. Built with UMG and C++.
+                                    </div>
+                                </div>
+
+                                <div class="carousel-slide">
+                                    <div class="media-frame">
+                                        <video autoplay loop muted playsinline>
+                                            <source src="videos/UnworthyRoses/InteractionInterface.mp4"
+                                                type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        &gt; FEATURE_03: Interaction Interface - Every object that the player can
+                                        interact with has a dynamic widget above it. Built with UMG and C++.
+                                    </div>
+                                </div>
+
+                                <div class="carousel-slide">
+                                    <div class="media-frame">
+                                        <video autoplay loop muted playsinline>
+                                            <source src="videos/UnworthyRoses/UW_Puzzles.mp4" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        &gt; FEATURE_04: Puzzle Solving - Engaging puzzles that challenge the player's
+                                        problem-solving skills, powered by the Interaction Interface. Built with UMG and
+                                        C++.
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="carousel-controls">
+                                <button class="carousel-btn prev-btn">‹ PREV</button>
+                                <span class="carousel-indicator">1 / 4</span>
+                                <button class="carousel-btn next-btn">NEXT ›</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="proj-2" class="sub-content">
+                        <p><strong>A Game of Dragon</strong></p>
+                        <p>A Third-Person, Casual Adventure game where you play as Barnon, a baby dragon in search of
+                            his older brothers. Explore The Island, face platform sections and solve puzzles in a
+                            real-time chill game!</p>
+                        <p>I worked on the Day/Night Cycle and Weather System that affects the gameplay and atmosphere.
+                        </p>
+                        <p><a href="https://leviackerman.itch.io/a-game-of-dragon" target="_blank"
+                                rel="noopener noreferrer" class="liner-action-link">Play it now! ↗</a></p>
+                        <div class="media-deck-frame aspect-16-9">
+                            <video autoplay loop muted playsinline>
+                                <source src="videos/AGOD/DayNight.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. CONTACT & RESUME PANEL -->
+                <article id="panel-contact" class="content-window" aria-labelledby="heading-contact">
+                    <div class="liner-meta-header">
+                        <span class="liner-catalog-stamp">LP 04 // GATEFOLD INSERT</span>
+                        <span class="liner-side-indicator">PRESS KIT & RESUME</span>
+                    </div>
+                    <h2 id="heading-contact">Resume</h2>
+                    <p>Feel free to reach out to me through any of the contact methods listed on the left panel!</p>
+                    <p>My Resume as of March 2026:</p>
+                    <div class="media-deck-frame" style="padding: 10px; background: #231e1a;">
+                        <iframe src="docs/MiguelVillasisResume.pdf" width="100%" height="520px"
+                            style="border: none; border-radius: 2px;">
+                            <p>Your browser does not support PDFs. <a href="docs/MiguelVillasisResume.pdf"
+                                    class="liner-action-link">Download the PDF</a>.</p>
+                        </iframe>
+                    </div>
+                </article>
+
+            </section>
         </div>
 
-        <div id="command-menu-container">
-            <div class="menu-title">SELECT COMMAND TO CONTINUE:</div>
-            <div class="combat-menu">
-                <button class="menu-btn" data-target="panel-about">1. PROFESSIONAL EXPERIENCE</button>
-                <button class="menu-btn" data-target="panel-credits">2. CREDITS</button>
-                <button class="menu-btn" data-target="panel-projects">3. PROJECTS</button>
-                <button class="menu-btn" data-target="panel-contact">4. RESUME</button>
+        <!-- BOTTOM SECTION: THE VINYL CRATE / RECORD BIN -->
+        <nav id="command-menu-container" aria-label="Vinyl Catalog">
+            <div class="crate-header">
+                <div class="menu-title">THE RECORD CRATE // SELECT AN ALBUM TO SPIN</div>
+                <div class="crate-instruction">FLIP THROUGH LP SLEEVES [1 - 4]</div>
             </div>
-        </div>
 
-    </div>
+            <div class="record-crate">
+
+                <!-- LP 1 -->
+                <button class="album-sleeve menu-btn" data-target="panel-about"
+                    data-album-title="PROFESSIONAL EXPERIENCE" data-track="Side A • Track 02" data-cat="CAT: MVM-EXP-01"
+                    data-label-color="#93512b">
+                    <div class="peeking-vinyl"></div>
+                    <div>
+                        <div class="sleeve-number">LP 01 • SIDE A</div>
+                        <div class="sleeve-title">Professional Experience</div>
+                        <div class="sleeve-tagline">Pipeline Developer @ Mainframe</div>
+                    </div>
+                    <div class="now-playing-tag">● NOW PLAYING</div>
+                </button>
+
+                <!-- LP 2 -->
+                <button class="album-sleeve menu-btn" data-target="panel-credits"
+                    data-album-title="Shipped Titles & Production" data-track="Side B • Track 01"
+                    data-cat="CAT: MVM-CRD-02" data-label-color="#2d5257">
+                    <div class="peeking-vinyl"></div>
+                    <div>
+                        <div class="sleeve-number">LP 02 • SIDE B</div>
+                        <div class="sleeve-title">Shipped Titles & Credits</div>
+                        <div class="sleeve-tagline">Xbox Bricks, Unicorn Academy, Super Kitties</div>
+                    </div>
+                    <div class="now-playing-tag">● NOW PLAYING</div>
+                </button>
+
+                <!-- LP 3 -->
+                <button class="album-sleeve menu-btn" data-target="panel-projects" data-album-title="B-Sides (Projects)"
+                    data-track="Side B • Track 02" data-cat="CAT: MVM-PRJ-03" data-label-color="#364936">
+                    <div class="peeking-vinyl"></div>
+                    <div>
+                        <div class="sleeve-number">LP 03 • SIDE B</div>
+                        <div class="sleeve-title">B-Sides (Projects)</div>
+                        <div class="sleeve-tagline">Unworthy Roses & Engine Mechanics</div>
+                    </div>
+                    <div class="now-playing-tag">● NOW PLAYING</div>
+                </button>
+
+                <!-- LP 4 -->
+                <button class="album-sleeve menu-btn" data-target="panel-contact"
+                    data-album-title="Direct Line & Press Kit" data-track="Gatefold Insert" data-cat="CAT: MVM-RES-04"
+                    data-label-color="#543754">
+                    <div class="peeking-vinyl"></div>
+                    <div>
+                        <div class="sleeve-number">LP 04 • GATEFOLD</div>
+                        <div class="sleeve-title">Contact Me</div>
+                        <div class="sleeve-tagline">Resume</div>
+                    </div>
+                    <div class="now-playing-tag">● NOW PLAYING</div>
+                </button>
+
+            </div>
+        </nav>
+
+    </main>
 
     <script>
-        // --- AUDIO SYSTEM ---
-        let audioCtx;
-        
+        // --- HI-FI ANALOG AUDIO SYSTEM (Web Audio API) ---
+        let audioCtx = null;
+        let isAudioMuted = false;
+
         function initAudio() {
             if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    audioCtx = new AudioContext();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
         }
 
+        // Initialize audio on first user gesture
         document.body.addEventListener('click', initAudio, { once: true });
         document.body.addEventListener('mouseover', initAudio, { once: true });
-        document.body.addEventListener('touchstart', initAudio, { once: true }); // Added for mobile tap
+        document.body.addEventListener('touchstart', initAudio, { once: true });
 
-        function playSound(type) {
-            if (!audioCtx || audioCtx.state === 'suspended') return;
-            
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.type = 'square'; 
-            
-            if (type === 'hover') {
-                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); 
-                gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); 
-                oscillator.stop(audioCtx.currentTime + 0.05); 
-            } else if (type === 'click') {
-                oscillator.frequency.setValueAtTime(400, audioCtx.currentTime); 
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); 
-                oscillator.stop(audioCtx.currentTime + 0.1); 
+        // Mute / Unmute Toggle Button
+        const audioToggleBtn = document.getElementById('audio-toggle-btn');
+        const audioBtnLabel = document.getElementById('audio-btn-label');
+
+        audioToggleBtn.addEventListener('click', () => {
+            initAudio();
+            isAudioMuted = !isAudioMuted;
+            if (isAudioMuted) {
+                audioToggleBtn.classList.add('muted');
+                audioToggleBtn.querySelector('.speaker-icon').textContent = '🔇';
+                audioBtnLabel.textContent = 'SOUND: OFF';
+            } else {
+                audioToggleBtn.classList.remove('muted');
+                audioToggleBtn.querySelector('.speaker-icon').textContent = '🔊';
+                audioBtnLabel.textContent = 'SOUND: ON';
+                playVinylSound('hover');
             }
+        });
 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.start();
+        // Synthesize analog mechanical sounds
+        function playVinylSound(type) {
+            if (isAudioMuted || !audioCtx || audioCtx.state === 'suspended') return;
+            const now = audioCtx.currentTime;
+
+            if (type === 'hover') {
+                // Tactile cardboard sleeve rustle / low wooden bin friction thud
+                const bufferSize = audioCtx.sampleRate * 0.04;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+                }
+
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(320, now);
+                filter.Q.setValueAtTime(1.5, now);
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                noise.start(now);
+
+            } else if (type === 'needle-drop') {
+                // 1. Motor hum startup tone (subtle low rumble)
+                const motorOsc = audioCtx.createOscillator();
+                const motorGain = audioCtx.createGain();
+                motorOsc.type = 'sine';
+                motorOsc.frequency.setValueAtTime(55, now);
+                motorOsc.frequency.exponentialRampToValueAtTime(33.3, now + 0.18);
+
+                motorGain.gain.setValueAtTime(0.07, now);
+                motorGain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+                motorOsc.connect(motorGain);
+                motorGain.connect(audioCtx.destination);
+                motorOsc.start(now);
+                motorOsc.stop(now + 0.2);
+
+                // 2. Needle drop mechanical click & groove surface pop
+                const clickSize = audioCtx.sampleRate * 0.035;
+                const clickBuf = audioCtx.createBuffer(1, clickSize, audioCtx.sampleRate);
+                const clickData = clickBuf.getChannelData(0);
+                for (let i = 0; i < clickSize; i++) {
+                    clickData[i] = (Math.random() * 2 - 1) * (i < 30 ? 1 : 0.25) * Math.exp(-i / (clickSize * 0.25));
+                }
+
+                const clickSource = audioCtx.createBufferSource();
+                clickSource.buffer = clickBuf;
+
+                const clickFilter = audioCtx.createBiquadFilter();
+                clickFilter.type = 'highpass';
+                clickFilter.frequency.setValueAtTime(1200, now + 0.05);
+
+                const clickGain = audioCtx.createGain();
+                clickGain.gain.setValueAtTime(0.06, now + 0.05);
+                clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+                clickSource.connect(clickFilter);
+                clickFilter.connect(clickGain);
+                clickGain.connect(audioCtx.destination);
+                clickSource.start(now + 0.04);
+            }
         }
 
-        // --- MAIN MENU LOGIC ---
+        // --- MEDIA PLAYBACK MANAGEMENT ---
+        function stopTwitterMedia() {
+            const twitterIframes = document.querySelectorAll('#credit-1 iframe, iframe[id^="twitter-widget"], iframe[src*="twitter.com"], iframe[src*="x.com"]');
+            twitterIframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":[]}', '*');
+                } catch (e) { }
+
+                if (iframe.src) {
+                    iframe.src = iframe.src;
+                }
+            });
+        }
+
+        function pauseAllMedia(container = document) {
+            container.querySelectorAll('video').forEach(vid => {
+                if (!vid.paused) {
+                    vid.pause();
+                }
+            });
+
+            container.querySelectorAll('iframe').forEach(iframe => {
+                if (iframe.src && iframe.src.includes('youtube.com')) {
+                    try {
+                        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":[]}', '*');
+                    } catch (e) { }
+                }
+            });
+
+            // Stop Twitter video if container is document or contains credit-1
+            if (container === document || container.querySelector('#credit-1') || container.id === 'credit-1') {
+                stopTwitterMedia();
+            }
+        }
+
+        // Click outside of video: stop playing when clicking out of any video
+        document.addEventListener('click', (e) => {
+            // If clicking inside carousel buttons, let carousel logic handle it
+            if (e.target.closest('.carousel-btn')) {
+                return;
+            }
+
+            const clickedVideo = e.target.closest('video');
+            const clickedMediaFrame = e.target.closest('.media-frame, .media-deck-frame');
+            const clickedTwitter = e.target.closest('#credit-1');
+
+            // Pause all videos that weren't the clicked video or inside clicked frame
+            document.querySelectorAll('video').forEach(vid => {
+                if (vid !== clickedVideo && (!clickedMediaFrame || !clickedMediaFrame.contains(vid))) {
+                    if (!vid.paused) {
+                        vid.pause();
+                    }
+                }
+            });
+
+            // Pause YouTube iframes if clicked outside their media frame
+            document.querySelectorAll('iframe').forEach(iframe => {
+                if (iframe.src && iframe.src.includes('youtube.com')) {
+                    if (!clickedMediaFrame || !clickedMediaFrame.contains(iframe)) {
+                        try {
+                            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":[]}', '*');
+                        } catch (e) { }
+                    }
+                }
+            });
+
+            // Stop Twitter video if click was outside the Twitter credit-1 container
+            if (!clickedTwitter) {
+                const credit1 = document.getElementById('credit-1');
+                const panelCredits = document.getElementById('panel-credits');
+                if (credit1 && credit1.classList.contains('active') && panelCredits && panelCredits.classList.contains('active')) {
+                    stopTwitterMedia();
+                }
+            }
+        });
+
+        // Toggle video play/pause on click for video frames without native controls
+        document.querySelectorAll('.media-frame video, .media-deck-frame video').forEach(vid => {
+            if (!vid.hasAttribute('controls')) {
+                vid.style.cursor = 'pointer';
+                vid.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (vid.paused) {
+                        vid.play().catch(() => { });
+                    } else {
+                        vid.pause();
+                    }
+                });
+            }
+        });
+
+        // --- TURNTABLE & VINYL INTERACTION LOGIC ---
         const mainButtons = document.querySelectorAll('.menu-btn');
         const mainPanels = document.querySelectorAll('.content-window');
+        const vinylDisc = document.getElementById('vinyl-disc');
+        const vinylLabel = document.getElementById('vinyl-label');
+        const labelTrackTitle = document.getElementById('label-track-title');
+        const tonearmPivot = document.getElementById('tonearm-pivot');
+        const turntableBadge = document.getElementById('turntable-badge');
+        const turntableAlbumTitle = document.getElementById('turntable-album-title');
+        const turntableCatalogCode = document.getElementById('turntable-catalog-code');
 
         mainButtons.forEach(button => {
-            button.addEventListener('mouseenter', () => playSound('hover'));
-            
-            button.addEventListener('click', () => {
-                playSound('click');
-                
-                mainButtons.forEach(btn => btn.classList.remove('active'));
-                mainPanels.forEach(panel => panel.classList.remove('active'));
+            button.addEventListener('mouseenter', () => playVinylSound('hover'));
 
+            button.addEventListener('click', () => {
+                playVinylSound('needle-drop');
+
+                // Stop any video currently playing before switching panels
+                pauseAllMedia();
+
+                // Update active button state
+                mainButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
+
+                // Switch liner notes panel
                 const targetId = button.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+                mainPanels.forEach(panel => panel.classList.remove('active'));
+                const targetPanel = document.getElementById(targetId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+
+                // Update Turntable Now Playing Data
+                const albumTitle = button.getAttribute('data-album-title') || 'Album';
+                const track = button.getAttribute('data-track') || 'Track';
+                const catalog = button.getAttribute('data-cat') || 'MVM-2026';
+                const labelColor = button.getAttribute('data-label-color') || '#93512b';
+
+                turntableBadge.textContent = `Now Spinning • ${track}`;
+                turntableAlbumTitle.textContent = albumTitle;
+                turntableCatalogCode.textContent = `${catalog} // 33⅓ RPM HIGH FIDELITY`;
+
+                labelTrackTitle.textContent = albumTitle.split(' ')[0];
+                vinylLabel.style.background = `radial-gradient(circle, ${labelColor} 0%, #151210 100%)`;
+
+                // Mechanical Tonearm Dance
+                tonearmPivot.classList.remove('playing');
+                void tonearmPivot.offsetWidth; // Trigger reflow
+                setTimeout(() => {
+                    tonearmPivot.classList.add('playing');
+                }, 80);
+
+                // Vinyl spin reset for tactile feel
+                vinylDisc.classList.add('spinning');
             });
         });
 
-        // --- SUB MENU (TABS) LOGIC ---
+        // --- INNER TABS (SUB-NAV) LOGIC ---
         const subButtons = document.querySelectorAll('.sub-btn');
 
         subButtons.forEach(button => {
-            button.addEventListener('mouseenter', () => playSound('hover'));
+            button.addEventListener('mouseenter', () => playVinylSound('hover'));
 
             button.addEventListener('click', () => {
-                playSound('click');
-                
+                playVinylSound('needle-drop');
+
                 const parentId = button.getAttribute('data-parent');
                 const targetId = button.getAttribute('data-target');
                 const parentPanel = document.getElementById(parentId);
-                
+                if (!parentPanel) return;
+
+                // Stop any video currently playing inside this parent panel
+                pauseAllMedia(parentPanel);
+
                 const localButtons = parentPanel.querySelectorAll('.sub-btn');
                 const localContent = parentPanel.querySelectorAll('.sub-content');
-                
+
                 localButtons.forEach(btn => btn.classList.remove('active'));
                 localContent.forEach(content => content.classList.remove('active'));
 
                 button.classList.add('active');
-                document.getElementById(targetId).classList.add('active');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
             });
         });
 
-        // --- CAROUSEL LOGIC ---
+        // --- 35MM FILMSTRIP CAROUSEL LOGIC ---
         const carousels = document.querySelectorAll('.carousel-container');
 
         carousels.forEach(carousel => {
@@ -741,33 +2170,49 @@
             let currentIndex = 0;
 
             function updateCarousel() {
-                // Hide all slides
-                slides.forEach(slide => slide.classList.remove('active'));
-                
-                // Show current slide
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                    const vid = slide.querySelector('video');
+                    if (vid) vid.pause();
+                });
                 slides[currentIndex].classList.add('active');
-                
-                // Update text indicator (e.g., "2 / 3")
+                const activeVid = slides[currentIndex].querySelector('video');
+                if (activeVid) {
+                    activeVid.currentTime = 0;
+                    activeVid.play().catch(() => { });
+                }
                 indicator.textContent = `${currentIndex + 1} / ${slides.length}`;
             }
 
-            // Setup audio for buttons (optional, uses the audio system we built)
-            prevBtn.addEventListener('mouseenter', () => playSound('hover'));
-            nextBtn.addEventListener('mouseenter', () => playSound('hover'));
+            // Pause all non-active carousel videos initially
+            slides.forEach((slide, idx) => {
+                const vid = slide.querySelector('video');
+                if (vid && idx !== 0) {
+                    vid.pause();
+                }
+            });
+
+            prevBtn.addEventListener('mouseenter', () => playVinylSound('hover'));
+            nextBtn.addEventListener('mouseenter', () => playVinylSound('hover'));
 
             prevBtn.addEventListener('click', () => {
-                playSound('click');
+                playVinylSound('needle-drop');
                 currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
                 updateCarousel();
             });
 
             nextBtn.addEventListener('click', () => {
-                playSound('click');
-                // If we are on the last slide, loop back to 0. Otherwise, go to the next slide.
+                playVinylSound('needle-drop');
                 currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
                 updateCarousel();
             });
         });
+
+        // Ensure inactive panel videos are paused on initial load
+        document.querySelectorAll('.content-window:not(.active) video, .sub-content:not(.active) video').forEach(vid => {
+            vid.pause();
+        });
     </script>
 </body>
+
 </html>
