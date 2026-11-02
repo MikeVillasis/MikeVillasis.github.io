@@ -46,15 +46,22 @@
     outline-offset: 2px;
 }
 
+/* Tabs climb diagonally from bottom left (Introduction) to top right (Contact Me).
+   The offset is a share of the sleeve's width, the pull-back the same share of the
+   tab's own width, so tabs spread evenly from edge to edge whatever their length.
+   (`left` rather than a margin, so the offset never squeezes the tab's width.) */
 .sleeve__tab {
+    --depth: calc(5 - var(--row));
+
     position: relative;
+    left: calc(var(--depth) * 25%);
+    translate: calc(var(--depth) * -25%) 0;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     align-self: flex-start;
-    max-width: calc(100% - var(--tab-x) * 0.35);
+    max-width: 100%;
     height: var(--tab-h);
-    margin-left: calc(var(--tab-x) * 0.35);
     padding: 0 14px;
     background: var(--sleeve);
     border: 2px solid var(--ink);
@@ -98,9 +105,9 @@
     box-shadow: 0 -2px 0 rgb(255 255 255 / 0.3) inset;
 }
 
-/* Only the front sleeve (always the selected one) shows its body text;
+/* Only the front sleeve (Introduction, first in the DOM) shows its body text;
    the ones behind expose a coloured strip beside the tabs in front of them */
-.sleeve:not([aria-selected="true"]) .sleeve__body > * {
+.sleeve:not(:first-child) .sleeve__body > * {
     visibility: hidden;
 }
 
@@ -139,10 +146,9 @@
     animation: spin 1.8s linear infinite;
 }
 
-/* Narrow phones: drop the LP numbers so even the longest title fits at the back
-   of the queue, where sleeves are narrowest */
+/* Narrow phones: the spinning disc stands in for the LP number so long titles fit */
 @media (max-width: 419px) {
-    .sleeve__cat {
+    .sleeve[aria-selected="true"] .sleeve__cat {
         display: none;
     }
 }
@@ -179,8 +185,6 @@
     }
 
     .sleeve__tab {
-        max-width: calc(100% - var(--tab-x));
-        margin-left: var(--tab-x);
         padding: 0 18px;
     }
 
