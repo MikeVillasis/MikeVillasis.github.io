@@ -1,8 +1,14 @@
 // The shelf: picking a sleeve pulls its record into the player, recolours the
 // player, swaps the turntable's record, and keeps the URL hash in sync (#credits).
+// The stack works as a queue: the picked sleeve moves to the front and the ones
+// that were in front of it go to the back, keeping their order.
 
 import { createTabs } from './tabs.js';
 import { createTurntable } from './turntable.js';
+
+// Tab offset by depth (front first), so the stagger stays put while records move
+const STAGGER = ['0%', '14%', '28%', '10%', '36%'];
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 export function initShelf() {
     const stack = document.querySelector('.shelf__stack');
@@ -16,10 +22,13 @@ export function initShelf() {
     };
 
     const shelf = createTabs(stack, {
-        // Sleeves stack front-to-back, so "up" walks deeper into the shelf
+        // Rotating the queue keeps the cyclic order, so "up" (deeper into the
+        // shelf) is always the next sleeve in the DOM
         nextKeys: ['ArrowUp', 'ArrowRight'],
         prevKeys: ['ArrowDown', 'ArrowLeft'],
         onSelect(sleeve, record, { initial }) {
+            arrange(rotateTo(shelf.tabs, sleeve), { animate: !initial });
+
             const id = sleeve.dataset.record;
             player.style.setProperty('--sleeve', `var(--c-${id})`);
             now.title.textContent = sleeve.querySelector('.sleeve__title').textContent;
@@ -42,6 +51,32 @@ export function initShelf() {
         const sleeve = fromHash();
         if (sleeve) shelf.select(sleeve);
     });
+}
+
+// Front-to-back order with `sleeve` at the front: [A B C D E] picking C -> [C D E A B]
+function rotateTo(sleeves, sleeve) {
+    const i = sleeves.indexOf(sleeve);
+    return [...sleeves.slice(i), ...sleeves.slice(0, i)];
+}
+
+// Place each sleeve at its depth, then slide it there from where it was (FLIP)
+function arrange(order, { animate }) {
+    const before = new Map(order.map((s) => [s, s.getBoundingClientRect().top]));
+
+    order.forEach((sleeve, depth) => {
+        sleeve.style.setProperty('--row', String(order.length - depth));
+        sleeve.style.setProperty('--tab-x', STAGGER[depth % STAGGER.length]);
+    });
+
+    if (!animate || reducedMotion.matches) return;
+    for (const sleeve of order) {
+        const dy = before.get(sleeve) - sleeve.getBoundingClientRect().top;
+        if (!dy) continue;
+        sleeve.animate(
+            [{ transform: `translateY(${dy}px)` }, { transform: 'none' }],
+            { duration: 450, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+        );
+    }
 }
 
 // On phones the player sits below the shelf; scroll to it when it's mostly off screen.
