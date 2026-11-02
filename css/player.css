@@ -1,0 +1,235 @@
+/* The player: the record pulled off the shelf, read like liner notes.
+   Without JS every record and track renders in sequence; with JS (html.js),
+   main.js hides all but the open one using the [hidden] attribute. */
+
+.player {
+    --sleeve: var(--c-intro);
+
+    min-width: 0;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-top: 12px solid var(--sleeve);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    scroll-margin-top: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.player:focus {
+    outline: none;
+}
+
+.player__deck {
+    display: none;
+}
+
+.js .player__deck {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 2px dashed var(--rule);
+}
+
+.player__now {
+    display: grid;
+    min-width: 0;
+}
+
+.player__badge {
+    justify-self: start;
+    padding: 2px 8px;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    background: var(--sleeve);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.player__title {
+    margin-top: 4px;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4.4vw, 1.35rem);
+}
+
+.player__code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+}
+
+.record {
+    padding: 18px 16px 22px;
+}
+
+.record + .record {
+    border-top: 2px dashed var(--rule);
+}
+
+.js .record + .record {
+    border-top: 0;
+}
+
+.record.is-entering {
+    animation: pull-out 0.45s var(--ease-out);
+}
+
+@keyframes pull-out {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+}
+
+.record h2 {
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 5.6vw, 2rem);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+.record > p,
+.track-panel > p,
+.liner-list {
+    max-width: 68ch;
+}
+
+.liner-stamp {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2px 12px;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.liner-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.liner-list li {
+    position: relative;
+    padding-left: 26px;
+}
+
+/* Little vinyl bullets */
+.liner-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--sleeve) 0 3px, var(--ink) 3.5px);
+}
+
+/* Tracks: sub-tabs inside a record. A swipeable row on phones. */
+.tracks {
+    display: flex;
+    gap: 8px;
+    margin: 0 -16px 16px;
+    padding: 4px 16px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+}
+
+.tracks::-webkit-scrollbar {
+    display: none;
+}
+
+.track {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 14px 6px 8px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--card);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    scroll-snap-align: start;
+}
+
+.track__no {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+}
+
+.track[aria-selected="true"] {
+    background: var(--sleeve);
+    box-shadow: 0 3px 0 var(--ink);
+}
+
+.track-panel.is-entering {
+    animation: pull-out 0.35s var(--ease-out);
+}
+
+.resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* PDFs in iframes are unreliable on phones; they get the buttons only */
+.resume-frame {
+    display: none;
+}
+
+@media (min-width: 720px) {
+    .resume-frame {
+        display: block;
+        padding: 10px;
+        background: var(--ink);
+        border-radius: 8px;
+    }
+
+    .resume-frame iframe {
+        width: 100%;
+        height: min(75vh, 900px);
+        border: 0;
+        border-radius: 4px;
+        background: #fff;
+    }
+}
+
+@media (min-width: 600px) {
+    .js .player__deck {
+        gap: 20px;
+        padding: 18px 28px;
+    }
+
+    .record {
+        padding: 24px 28px 30px;
+    }
+
+    .tracks {
+        flex-wrap: wrap;
+        margin: 0 0 20px;
+        padding: 4px 0 6px;
+        overflow: visible;
+    }
+}
