@@ -98,9 +98,9 @@
     box-shadow: 0 -2px 0 rgb(255 255 255 / 0.3) inset;
 }
 
-/* Only the front sleeve (Introduction, first in the DOM) shows its body text;
+/* Only the front sleeve (always the selected one) shows its body text;
    the ones behind expose a coloured strip beside the tabs in front of them */
-.sleeve:not(:first-child) .sleeve__body > * {
+.sleeve:not([aria-selected="true"]) .sleeve__body > * {
     visibility: hidden;
 }
 
@@ -139,9 +139,10 @@
     animation: spin 1.8s linear infinite;
 }
 
-/* Narrow phones: the spinning disc stands in for the LP number so long titles fit */
+/* Narrow phones: drop the LP numbers so even the longest title fits at the back
+   of the queue, where sleeves are narrowest */
 @media (max-width: 419px) {
-    .sleeve[aria-selected="true"] .sleeve__cat {
+    .sleeve__cat {
         display: none;
     }
 }
