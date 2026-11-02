@@ -1,0 +1,181 @@
+/* The counter: polaroid, spec sheet (a price tag), and the direct line card. */
+
+/* Phones: the counter dissolves into the page grid so the shelf comes right after
+   the ID card and the Direct Line card drops below the records (see layout.css) */
+.counter {
+    display: contents;
+}
+
+.counter__id {
+    order: 1;
+}
+
+.direct-line {
+    order: 3;
+}
+
+/* Phones: photo and spec sheet side by side to save height */
+.counter__id {
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.polaroid {
+    margin: 0;
+    padding: 6px 6px 0;
+    background: #fff;
+    box-shadow: var(--shadow);
+    transform: rotate(-3deg);
+}
+
+.polaroid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.polaroid figcaption {
+    padding: 4px 0 6px;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+/* Price tag: punched hole and a string notch on the left */
+.spec-sheet {
+    position: relative;
+    padding: 12px 14px 12px 24px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 6px 14px 14px 6px;
+    box-shadow: var(--shadow);
+}
+
+.spec-sheet::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 14px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    background: var(--paper);
+}
+
+.spec-sheet__name {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4.6vw, 1.3rem);
+    font-weight: 400;
+}
+
+.spec-sheet__subtitle {
+    margin: 2px 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.spec-sheet__stats {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.spec-sheet__stats div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 0;
+    border-top: 1px dashed var(--rule);
+}
+
+.spec-sheet__stats dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.spec-sheet__stats dd {
+    margin: 0;
+    font-weight: 600;
+    text-align: right;
+}
+
+.direct-line {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.direct-line__title {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.direct-line__list {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9rem;
+}
+
+.direct-line__list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 8px;
+    min-height: 40px;
+}
+
+.direct-line__list a {
+    overflow-wrap: anywhere;
+}
+
+.direct-line__label {
+    min-width: 5.2em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+@media (min-width: 960px) {
+    .counter {
+        display: grid;
+        gap: 16px;
+    }
+
+    .counter__id,
+    .direct-line {
+        order: 0;
+    }
+
+    .counter__id {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .polaroid {
+        width: 220px;
+        justify-self: center;
+    }
+}

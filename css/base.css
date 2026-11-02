@@ -1,0 +1,163 @@
+/* Tokens, reset and shared primitives. Every other stylesheet builds on these. */
+
+:root {
+    color-scheme: light;
+
+    /* Store interior */
+    --paper: #f6efe2;
+    --paper-deep: #ece0c9;
+    --card: #fffaf0;
+    --ink: #1f1a17;
+    --ink-soft: #5a4e45;
+    --rule: #d8c7a8;
+    --wood: #9a6a43;
+    --wood-dark: #5e3a20;
+
+    /* Sleeve colours, one per record. All carry dark ink at AA contrast. */
+    --c-intro: #ef6a3f;
+    --c-experience: #f4b63b;
+    --c-credits: #3fb3a3;
+    --c-projects: #a891dc;
+    --c-contact: #f283ab;
+
+    --font-display: "Bungee", "Arial Black", system-ui, sans-serif;
+    --font-body: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+    --radius: 10px;
+    --shadow: 0 1px 0 rgb(31 26 23 / 0.08), 0 8px 24px -12px rgb(31 26 23 / 0.35);
+    --gutter: 16px;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--paper);
+    /* Faint paper grain so the floor doesn't read as a flat fill */
+    background-image:
+        radial-gradient(rgb(31 26 23 / 0.035) 1px, transparent 1px),
+        radial-gradient(rgb(31 26 23 / 0.025) 1px, transparent 1px);
+    background-size: 22px 22px, 13px 13px;
+    background-position: 0 0, 7px 9px;
+    color: var(--ink);
+    font: 400 1rem/1.6 var(--font-body);
+}
+
+img,
+video,
+iframe {
+    display: block;
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.15;
+    margin: 0;
+}
+
+p {
+    margin: 0 0 0.85em;
+}
+
+a {
+    color: inherit;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.skip-link {
+    position: absolute;
+    left: var(--gutter);
+    top: -100px;
+    z-index: 100;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius);
+}
+
+.skip-link:focus {
+    top: var(--gutter);
+}
+
+/* Chunky price-sticker button */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 3px 0 var(--ink);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 var(--ink);
+}
+
+.button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--ink);
+}
+
+.button--ink {
+    background: var(--ink);
+    color: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

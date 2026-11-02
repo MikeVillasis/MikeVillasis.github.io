@@ -1,0 +1,86 @@
+/* Page frame: store sign, counter (profile) beside the floor (shelf + player), footer.
+   Phones get one column; the counter moves to a sticky sidebar from 960px. */
+
+.store-sign {
+    padding: 18px var(--gutter) 14px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    border-bottom: 6px solid var(--wood);
+}
+
+.store-sign__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 6vw, 2.1rem);
+    letter-spacing: 0.02em;
+    /* Neon-ish sign glow in the intro colour */
+    text-shadow: 0 0 18px rgb(239 106 63 / 0.55);
+}
+
+.store-sign__tagline {
+    margin: 2px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.store {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 20px var(--gutter) 32px;
+    padding-left: max(var(--gutter), env(safe-area-inset-left));
+    padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+
+.floor {
+    order: 2;
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+}
+
+.store-footer {
+    padding: 20px var(--gutter) calc(20px + env(safe-area-inset-bottom));
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-align: center;
+    color: var(--ink-soft);
+}
+
+.store-footer p {
+    margin: 0;
+}
+
+@media (min-width: 960px) {
+    .store {
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 32px;
+        padding-top: 32px;
+    }
+
+    .floor {
+        order: 0;
+    }
+
+    .counter {
+        align-self: start;
+    }
+
+    .floor {
+        gap: 28px;
+    }
+}
+
+/* Only pin the counter when the whole of it fits on screen */
+@media (min-width: 960px) and (min-height: 860px) {
+    .counter {
+        position: sticky;
+        top: 24px;
+    }
+}
