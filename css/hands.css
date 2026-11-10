@@ -1,0 +1,38 @@
+/* Hand doodles: base styles. Size via --hand-size (element width). */
+.hand {
+  --hand-ink: var(--ink, #1f1a17);
+  --hand-paper: var(--paper, #f6efe2);
+  --hand-size: 140px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--hand-size);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+@media (min-width: 600px) {
+  .hand { --hand-size: 250px; }
+}
+.hand svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* the forearm runs on past the box and fades out (mask in js/hands.js) */
+  overflow: visible;
+}
+.hand .hand-pose { display: none; }
+.hand[data-pose="rest"] .hand-pose[data-pose="rest"],
+.hand[data-pose="reach"] .hand-pose[data-pose="reach"],
+.hand[data-pose="flip"] .hand-pose[data-pose="flip"],
+.hand[data-pose="grip"] .hand-pose[data-pose="grip"],
+.hand[data-pose="hold"] .hand-pose[data-pose="hold"] { display: inline; }
+.hand .hand-pose path {
+  fill: var(--hand-paper);
+  stroke: var(--hand-ink);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hand .hand-pose path.line { fill: none; stroke-width: 5; }

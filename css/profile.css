@@ -1,33 +1,33 @@
-/* The counter: polaroid, spec sheet (a price tag), and the direct line card. */
-
-/* Phones: the counter dissolves into the page grid so the shelf comes right after
-   the ID card and the Direct Line card drops below the records (see layout.css) */
-.counter {
-    display: contents;
-}
-
-.counter__id {
-    order: 1;
-}
-
-.direct-line {
-    order: 3;
-}
-
-/* Phones: photo and spec sheet side by side to save height */
-.counter__id {
-    display: grid;
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: 14px;
-    align-items: start;
-}
+/* The front plank of the crate: name and stats in marker, price stickers, Direct Line
+   contacts, and the polaroid taped to the corner. Everything here is lettered in ink on
+   light wood (see .crate__front in crate.css). */
 
 .polaroid {
+    position: absolute;
+    z-index: 2;
+    top: -34px;
+    right: 12px;
+    width: 92px;
     margin: 0;
-    padding: 6px 6px 0;
+    padding: 5px 5px 0;
     background: #fff;
-    box-shadow: var(--shadow);
-    transform: rotate(-3deg);
+    box-shadow: 0 6px 14px -4px rgb(31 26 23 / 0.55);
+    transform: rotate(4deg);
+}
+
+/* Strip of tape */
+.polaroid::before {
+    content: "";
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 46px;
+    height: 17px;
+    margin-left: -23px;
+    background: rgb(244 224 150 / 0.82);
+    border-left: 1px dashed rgb(31 26 23 / 0.2);
+    border-right: 1px dashed rgb(31 26 23 / 0.2);
+    transform: rotate(-4deg);
 }
 
 .polaroid img {
@@ -38,144 +38,210 @@
 }
 
 .polaroid figcaption {
-    padding: 4px 0 6px;
+    padding: 3px 0 5px;
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-align: center;
 }
 
-/* Price tag: punched hole and a string notch on the left */
 .spec-sheet {
-    position: relative;
-    padding: 12px 14px 12px 24px;
-    background: var(--card);
-    border: 2px solid var(--ink);
-    border-radius: 6px 14px 14px 6px;
-    box-shadow: var(--shadow);
-}
-
-.spec-sheet::before {
-    content: "";
-    position: absolute;
-    left: 8px;
-    top: 14px;
-    width: 9px;
-    height: 9px;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    background: var(--paper);
+    /* leave the corner for the polaroid */
+    padding-right: 104px;
+    min-height: 74px;
 }
 
 .spec-sheet__name {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 4.6vw, 1.3rem);
+    font-size: clamp(1.4rem, 6.4vw, 2.6rem);
     font-weight: 400;
+    line-height: 1.05;
+    transform: rotate(-1deg);
+    transform-origin: left center;
 }
 
 .spec-sheet__subtitle {
-    margin: 2px 0 8px;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
+    margin: 4px 0 0;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-decoration: underline wavy rgb(31 26 23 / 0.6);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
 }
 
+/* Price stickers. Placed outside .spec-sheet's right padding via negative margin so
+   they can run the full width of the plank. */
 .spec-sheet__stats {
-    margin: 0;
-    font-size: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    margin: 12px -104px 0 0;
+    padding: 0;
 }
 
 .spec-sheet__stats div {
     display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 3px 0;
-    border-top: 1px dashed var(--rule);
+    align-items: baseline;
+    gap: 7px;
+    padding: 4px 10px 5px;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 3px 8px 3px 8px;
+    box-shadow: 0 2px 0 rgb(31 26 23 / 0.5);
+    transform: rotate(-1.4deg);
+}
+
+.spec-sheet__stats div:nth-child(2) {
+    transform: rotate(1.2deg);
+}
+
+.spec-sheet__stats div:nth-child(3) {
+    transform: rotate(-0.6deg);
 }
 
 .spec-sheet__stats dt {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--ink-soft);
 }
 
 .spec-sheet__stats dd {
     margin: 0;
-    font-weight: 600;
-    text-align: right;
+    font-weight: 700;
+    font-size: 0.88rem;
 }
 
+/* Direct Line: contact slips on the plank */
 .direct-line {
     display: grid;
-    gap: 12px;
-    padding: 14px;
-    background: var(--card);
-    border: 2px solid var(--ink);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    gap: 8px;
+    min-width: 0;
 }
 
 .direct-line__title {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--ink);
+    padding-bottom: 4px;
+    border-bottom: 2.5px solid var(--ink);
+    border-radius: 0 0 40% 4px / 0 0 3px 2px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+.direct-line__title span:last-child {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .direct-line__list {
     display: grid;
-    gap: 2px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 0.9rem;
+}
+
+/* Visual order: Phone | LinkedIn / Mail (full row) / IMDB. DOM order stays
+   Phone, Mail, LinkedIn, IMDB. */
+.direct-line__list li:nth-child(2) {
+    grid-column: 1 / -1;
+    order: 3;
 }
 
 .direct-line__list li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 8px;
-    min-height: 40px;
+    position: relative;
+    min-width: 0;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 3px 7px 3px 7px;
+    box-shadow: 0 2px 0 rgb(31 26 23 / 0.45);
+}
+
+.direct-line__list li:nth-child(1) {
+    order: 1;
+}
+
+.direct-line__list li:nth-child(3) {
+    order: 2;
+}
+
+.direct-line__list li:nth-child(4) {
+    order: 4;
 }
 
 .direct-line__list a {
+    display: flex;
+    align-items: flex-end;
+    min-height: 44px;
+    padding: 14px 10px 5px;
+    font-size: 0.88rem;
+    font-weight: 600;
     overflow-wrap: anywhere;
 }
 
 .direct-line__label {
-    min-width: 5.2em;
+    position: absolute;
+    top: 3px;
+    left: 10px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.6rem;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--ink-soft);
 }
 
-@media (min-width: 960px) {
-    .counter {
-        display: grid;
-        gap: 16px;
-    }
+.direct-line > .button {
+    width: 100%;
+    min-height: 44px;
+}
 
-    .counter__id,
-    .direct-line {
-        order: 0;
-    }
-
-    .counter__id {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
+@media (min-width: 700px) {
     .polaroid {
-        width: 190px;
-        justify-self: center;
+        top: -46px;
+        right: 26px;
+        width: 140px;
+        padding: 7px 7px 0;
+    }
+
+    .polaroid::before {
+        width: 64px;
+        margin-left: -32px;
+    }
+
+    .polaroid figcaption {
+        padding: 5px 0 8px;
+        font-size: 1rem;
+    }
+
+    .crate__front {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+        align-items: start;
+        gap: 18px 36px;
+        padding-right: 190px;
+    }
+
+    .spec-sheet {
+        padding-right: 0;
+    }
+
+    .spec-sheet__stats {
+        margin-right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .direct-line {
+        grid-template-columns: 1fr;
+    }
+
+    .direct-line > .button {
+        width: auto;
+        justify-self: start;
     }
 }

@@ -1,0 +1,27 @@
+/* Crate dig animation (js/dig.js): stacking for the hands and the flying record ghost.
+   The crate paints above the player so a record carried down into it stays on top. */
+
+.crate {
+    z-index: 2;
+}
+
+/* A copy of a sleeve, flat, used while a record travels between the crate and the player */
+.dig-ghost {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: 0 0;
+    will-change: transform, opacity;
+}
+
+.dig-ghost .sleeve__tab {
+    transition: none;
+}
+
+/* Hands sit above the records, the front plank and the ghost */
+.crate__scene > .hand {
+    z-index: 5;
+}

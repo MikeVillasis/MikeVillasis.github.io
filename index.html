@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Miguel Villasis Miranda · Unreal Engine Developer">
     <meta property="og:description"
-        content="Senior Unreal Engine Developer: C++, Python, Blueprints and pipeline tools. Browse the record shelf.">
+        content="Senior Unreal Engine Developer: C++, Python, Blueprints and pipeline tools. Browse the record crate.">
     <meta property="og:url" content="https://mikevillasis.github.io/">
     <meta property="og:image" content="https://mikevillasis.github.io/assets/img/ProfileP.jpg">
 
@@ -23,15 +23,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/profile.css">
-    <link rel="stylesheet" href="css/shelf.css">
+    <link rel="stylesheet" href="css/crate.css">
+    <link rel="stylesheet" href="css/hands.css">
+    <link rel="stylesheet" href="css/dig.css">
     <link rel="stylesheet" href="css/player.css">
-    <link rel="stylesheet" href="css/turntable.css">
     <link rel="stylesheet" href="css/media.css">
 
     <script>document.documentElement.classList.add('js');</script>
@@ -49,144 +50,135 @@
 
     <div class="store">
 
-        <!-- COUNTER: PROFILE, SPEC SHEET, CONTACT -->
-        <aside class="counter" aria-label="About Miguel">
-            <div class="counter__id">
-                <figure class="polaroid">
-                    <img src="assets/img/ProfileP.jpg" alt="Miguel Villasis Miranda Profile Picture" width="320"
-                        height="320">
-                    <figcaption>MIGUEL</figcaption>
-                </figure>
+        <main class="floor">
 
-                <div class="spec-sheet">
-                    <h1 class="spec-sheet__name">Miguel Villasis Miranda</h1>
-                    <p class="spec-sheet__subtitle">Dev Spec Sheet</p>
-                    <dl class="spec-sheet__stats">
-                        <div>
-                            <dt>Class</dt>
-                            <dd>UE Developer</dd>
+            <!-- THE CRATE: one record per button, Introduction at the front, Contact Me at the back -->
+            <div class="crate">
+                <div class="crate__scene">
+                    <div class="crate__records" role="tablist" aria-orientation="vertical" aria-label="Records">
+                        <button class="sleeve" role="tab" id="tab-intro" aria-controls="intro" aria-selected="true"
+                            data-record="intro" data-state="standing" style="--sleeve: var(--c-intro); --i: 0">
+                            <span class="sleeve__tab">
+                                <span class="sleeve__cat">LP 00</span>
+                                <span class="sleeve__title">Introduction</span>
+                            </span>
+                            <span class="sleeve__body" aria-hidden="true">
+                                <span class="sleeve__tagline">Welcome Showcase</span>
+                                <span class="sleeve__code">CAT: MVM-INT-00</span>
+                            </span>
+                        </button>
+                        <button class="sleeve" role="tab" id="tab-experience" aria-controls="experience"
+                            aria-selected="false" data-record="experience" data-state="standing"
+                            style="--sleeve: var(--c-experience); --i: 1">
+                            <span class="sleeve__tab">
+                                <span class="sleeve__cat">LP 01</span>
+                                <span class="sleeve__title">Professional Experience</span>
+                            </span>
+                            <span class="sleeve__body" aria-hidden="true">
+                                <span class="sleeve__tagline">Pipeline Developer @ Mainframe</span>
+                                <span class="sleeve__code">CAT: MVM-EXP-01</span>
+                            </span>
+                        </button>
+                        <button class="sleeve" role="tab" id="tab-credits" aria-controls="credits"
+                            aria-selected="false" data-record="credits" data-state="standing"
+                            style="--sleeve: var(--c-credits); --i: 2">
+                            <span class="sleeve__tab">
+                                <span class="sleeve__cat">LP 02</span>
+                                <span class="sleeve__title">Shipped Titles &amp; Credits</span>
+                            </span>
+                            <span class="sleeve__body" aria-hidden="true">
+                                <span class="sleeve__tagline">Xbox Bricks, Unicorn Academy, Super Kitties</span>
+                                <span class="sleeve__code">CAT: MVM-CRD-02</span>
+                            </span>
+                        </button>
+                        <button class="sleeve" role="tab" id="tab-projects" aria-controls="projects"
+                            aria-selected="false" data-record="projects" data-state="standing"
+                            style="--sleeve: var(--c-projects); --i: 3">
+                            <span class="sleeve__tab">
+                                <span class="sleeve__cat">LP 03</span>
+                                <span class="sleeve__title">Projects (B-Sides)</span>
+                            </span>
+                            <span class="sleeve__body" aria-hidden="true">
+                                <span class="sleeve__tagline">Unworthy Roses &amp; Engine Mechanics</span>
+                                <span class="sleeve__code">CAT: MVM-PRJ-03</span>
+                            </span>
+                        </button>
+                        <button class="sleeve" role="tab" id="tab-contact" aria-controls="contact"
+                            aria-selected="false" data-record="contact" data-state="standing"
+                            style="--sleeve: var(--c-contact); --i: 4">
+                            <span class="sleeve__tab">
+                                <span class="sleeve__cat">LP 04</span>
+                                <span class="sleeve__title">Contact Me</span>
+                            </span>
+                            <span class="sleeve__body" aria-hidden="true">
+                                <span class="sleeve__tagline">Resume</span>
+                                <span class="sleeve__code">CAT: MVM-RES-04</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- FRONT WALL OF THE CRATE: name, spec sheet and contact, written on the wood -->
+                    <div class="crate__front">
+                        <figure class="polaroid">
+                            <img src="assets/img/ProfileP.jpg" alt="Miguel Villasis Miranda Profile Picture"
+                                width="320" height="320">
+                            <figcaption>MIGUEL</figcaption>
+                        </figure>
+
+                        <div class="spec-sheet">
+                            <h1 class="spec-sheet__name">Miguel Villasis Miranda</h1>
+                            <p class="spec-sheet__subtitle">Dev Spec Sheet</p>
+                            <dl class="spec-sheet__stats">
+                                <div>
+                                    <dt>Class</dt>
+                                    <dd>UE Developer</dd>
+                                </div>
+                                <div>
+                                    <dt>Level</dt>
+                                    <dd>Senior</dd>
+                                </div>
+                                <div>
+                                    <dt>EXP</dt>
+                                    <dd>6 (years of experience)</dd>
+                                </div>
+                            </dl>
                         </div>
-                        <div>
-                            <dt>Level</dt>
-                            <dd>Senior</dd>
-                        </div>
-                        <div>
-                            <dt>EXP</dt>
-                            <dd>6 (years of experience)</dd>
-                        </div>
-                    </dl>
+
+                        <section class="direct-line" aria-labelledby="direct-line-title">
+                            <h2 id="direct-line-title" class="direct-line__title"><span>Direct Line</span><span>MVM-HQ</span></h2>
+                            <ul class="direct-line__list">
+                                <li>
+                                    <span class="direct-line__label">Phone:</span>
+                                    <a href="tel:+16044045106">+1 (604) 404-5106</a>
+                                </li>
+                                <li>
+                                    <span class="direct-line__label">Mail:</span>
+                                    <a href="mailto:miguelvillasism@gmail.com">miguelvillasism@gmail.com</a>
+                                </li>
+                                <li>
+                                    <span class="direct-line__label">LinkedIn:</span>
+                                    <a href="https://www.linkedin.com/in/miguel-villasismiranda/" target="_blank"
+                                        rel="noopener noreferrer">Miguel Villasis ↗</a>
+                                </li>
+                                <li>
+                                    <span class="direct-line__label">IMDB:</span>
+                                    <a href="https://www.imdb.com/name/nm13754785/" target="_blank"
+                                        rel="noopener noreferrer">IMDB Page ↗</a>
+                                </li>
+                            </ul>
+                            <a class="button button--ink" href="docs/MiguelVillasisResume.pdf" target="_blank"
+                                rel="noopener">Resume (PDF) ↗</a>
+                        </section>
+                    </div>
+                    <!-- Stick-figure hands are injected into .crate__scene by JS -->
                 </div>
             </div>
 
-            <section class="direct-line" aria-labelledby="direct-line-title">
-                <h2 id="direct-line-title" class="direct-line__title"><span>Direct Line</span><span>MVM-HQ</span></h2>
-                <ul class="direct-line__list">
-                    <li>
-                        <span class="direct-line__label">Phone:</span>
-                        <a href="tel:+16044045106">+1 (604) 404-5106</a>
-                    </li>
-                    <li>
-                        <span class="direct-line__label">Mail:</span>
-                        <a href="mailto:miguelvillasism@gmail.com">miguelvillasism@gmail.com</a>
-                    </li>
-                    <li>
-                        <span class="direct-line__label">LinkedIn:</span>
-                        <a href="https://www.linkedin.com/in/miguel-villasismiranda/" target="_blank"
-                            rel="noopener noreferrer">Miguel Villasis ↗</a>
-                    </li>
-                    <li>
-                        <span class="direct-line__label">IMDB:</span>
-                        <a href="https://www.imdb.com/name/nm13754785/" target="_blank"
-                            rel="noopener noreferrer">IMDB Page ↗</a>
-                    </li>
-                </ul>
-                <a class="button button--ink" href="docs/MiguelVillasisResume.pdf" target="_blank"
-                    rel="noopener">Resume (PDF) ↗</a>
-            </section>
-        </aside>
-
-        <main class="floor">
-
-            <!-- THE SHELF: one sleeve per record, Introduction at the front -->
-            <nav class="shelf" aria-label="Record shelf">
-                <div class="shelf__stack" role="tablist" aria-orientation="vertical" aria-label="Records">
-                    <button class="sleeve" role="tab" id="tab-intro" aria-controls="intro" aria-selected="true"
-                        data-record="intro" style="--sleeve: var(--c-intro); --row: 5">
-                        <span class="sleeve__tab">
-                            <span class="sleeve__cat">LP 00</span>
-                            <span class="sleeve__title">Introduction</span>
-                        </span>
-                        <span class="sleeve__body" aria-hidden="true">
-                            <span class="sleeve__tagline">Welcome Showcase</span>
-                            <span class="sleeve__code">CAT: MVM-INT-00</span>
-                        </span>
-                    </button>
-                    <button class="sleeve" role="tab" id="tab-experience" aria-controls="experience"
-                        aria-selected="false" data-record="experience"
-                        style="--sleeve: var(--c-experience); --row: 4">
-                        <span class="sleeve__tab">
-                            <span class="sleeve__cat">LP 01</span>
-                            <span class="sleeve__title">Professional Experience</span>
-                        </span>
-                        <span class="sleeve__body" aria-hidden="true">
-                            <span class="sleeve__tagline">Pipeline Developer @ Mainframe</span>
-                            <span class="sleeve__code">CAT: MVM-EXP-01</span>
-                        </span>
-                    </button>
-                    <button class="sleeve" role="tab" id="tab-credits" aria-controls="credits" aria-selected="false"
-                        data-record="credits" style="--sleeve: var(--c-credits); --row: 3">
-                        <span class="sleeve__tab">
-                            <span class="sleeve__cat">LP 02</span>
-                            <span class="sleeve__title">Shipped Titles &amp; Credits</span>
-                        </span>
-                        <span class="sleeve__body" aria-hidden="true">
-                            <span class="sleeve__tagline">Xbox Bricks, Unicorn Academy, Super Kitties</span>
-                            <span class="sleeve__code">CAT: MVM-CRD-02</span>
-                        </span>
-                    </button>
-                    <button class="sleeve" role="tab" id="tab-projects" aria-controls="projects"
-                        aria-selected="false" data-record="projects"
-                        style="--sleeve: var(--c-projects); --row: 2">
-                        <span class="sleeve__tab">
-                            <span class="sleeve__cat">LP 03</span>
-                            <span class="sleeve__title">Projects (B-Sides)</span>
-                        </span>
-                        <span class="sleeve__body" aria-hidden="true">
-                            <span class="sleeve__tagline">Unworthy Roses &amp; Engine Mechanics</span>
-                            <span class="sleeve__code">CAT: MVM-PRJ-03</span>
-                        </span>
-                    </button>
-                    <button class="sleeve" role="tab" id="tab-contact" aria-controls="contact" aria-selected="false"
-                        data-record="contact" style="--sleeve: var(--c-contact); --row: 1">
-                        <span class="sleeve__tab">
-                            <span class="sleeve__cat">LP 04</span>
-                            <span class="sleeve__title">Contact Me</span>
-                        </span>
-                        <span class="sleeve__body" aria-hidden="true">
-                            <span class="sleeve__tagline">Resume</span>
-                            <span class="sleeve__code">CAT: MVM-RES-04</span>
-                        </span>
-                    </button>
-                </div>
-                <div class="shelf__lip" aria-hidden="true"></div>
-            </nav>
-
-            <!-- THE PLAYER: the record pulled out of the shelf -->
+            <!-- THE PLAYER: the record pulled out of the crate -->
             <section id="player" class="player" aria-label="Open record" tabindex="-1">
-                <div class="player__deck" aria-hidden="true">
-                    <div class="turntable">
-                        <div class="turntable__platter">
-                            <div class="turntable__vinyl">
-                                <span class="turntable__label"><span class="turntable__label-text">LP 00</span></span>
-                            </div>
-                        </div>
-                        <div class="turntable__arm"></div>
-                    </div>
-                    <div class="player__now">
-                        <span class="player__badge">Now spinning</span>
-                        <span class="player__title">Introduction</span>
-                        <span class="player__code">CAT: MVM-INT-00</span>
-                    </div>
+                <div class="player__head" aria-hidden="true">
+                    <span class="player__title">Introduction</span>
+                    <span class="player__code">CAT: MVM-INT-00</span>
                 </div>
 
                 <!-- LP 00 · INTRODUCTION -->

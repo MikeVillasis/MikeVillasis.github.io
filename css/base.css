@@ -12,6 +12,8 @@
     --rule: #d8c7a8;
     --wood: #9a6a43;
     --wood-dark: #5e3a20;
+    --wood-deep: #3b2412;
+    --wood-light: #d9ab75;
 
     /* Sleeve colours, one per record. All carry dark ink at AA contrast. */
     --c-intro: #ef6a3f;
@@ -20,7 +22,7 @@
     --c-projects: #a891dc;
     --c-contact: #f283ab;
 
-    --font-display: "Bungee", "Arial Black", system-ui, sans-serif;
+    --font-display: "Permanent Marker", "Marker Felt", "Comic Sans MS", cursive, sans-serif;
     --font-body: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
 
